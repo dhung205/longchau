@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Không gian làm việc · Long Châu</title>
+    <link rel="stylesheet" href="css/workspace.css?v=16">
+    <link rel="stylesheet" href="css/upload.css?v=7">
+    <link rel="stylesheet" href="css/dashboard.css?v=2">
+    <link rel="stylesheet" href="css/dashboard-chart.css?v=3">
+    <link rel="stylesheet" href="css/dashboard-tabs.css?v=4">
+    <link rel="stylesheet" href="assets/css/orders.css?v=2">
+    <link rel="stylesheet" href="css/manage-orders.css?v=1">
+</head>
+<body data-role="STAFF">
+<div class="workspace" id="workspace" hidden>
+    <aside class="sidebar"><a class="workspace-brand" href="home.html"><span>✚</span>
+        <div>NHÀ THUỐC<strong>LONG CHÂU</strong></div>
+    </a>
+        <div class="sidebar-label">KHÔNG GIAN STAFF</div><div class="sidebar-user"><span>LC</span><div><b id="sidebar-user-name">Nhân viên</b><small>Nhân viên cửa hàng</small></div></div>
+        <nav class="workspace-nav" aria-label="Các tab nhân viên"><a class="active" href="#tab-medicines" data-workspace-tab="medicines">✚ <span>Quản lý thuốc</span></a><a href="#tab-inventory" data-workspace-tab="inventory">▤ <span>Quản lý kho</span></a><a href="#tab-orders" data-workspace-tab="orders">▣ <span>Quản lý đơn hàng</span></a><a href="#tab-customers" data-workspace-tab="customers">◎ <span>Khách hàng</span></a><a href="#tab-consult" data-workspace-tab="consult">♡ <span>Tư vấn thuốc</span></a><a href="#tab-account" data-workspace-tab="account">◉ <span>Tài khoản của tôi</span></a><a href="#tab-reports" data-workspace-tab="reports">▥ <span>Báo cáo thống kê</span></a><a href="#tab-documents" data-workspace-tab="documents">▤ <span>Tài liệu</span></a></nav>
+        <div class="sidebar-bottom"><span class="role-dot"></span> Nhân viên<a href="home.html">← Về trang nhà thuốc</a>
+        </div>
+    </aside>
+    <main>
+        <header class="topbar"><span>Không gian làm việc <b>/ Quản lý thuốc</b></span>
+            <button id="logout" type="button">Đăng xuất ↗</button>
+        </header>
+<section class="report-page-heading" data-tab-panel="reports"><span class="overline">BẢNG ĐIỀU KHIỂN</span><h1>Báo cáo thống kê</h1><p>Theo dõi doanh thu, đơn hàng và tình trạng thuốc trong nhà thuốc.</p></section><section class="dashboard-metrics" id="admin-reports" data-tab-panel="reports"><article><span>DOANH THU</span><strong id="dash-revenue">0</strong><small>Đơn giao thành công trên hệ thống</small></article><article><span>SỐ ĐƠN HOÀN THÀNH</span><strong id="dash-orders">0</strong><small>Đơn giao thành công</small></article><article><span>SẮP HẾT HÀNG</span><strong id="dash-low-stock">0</strong><small>Tồn kho từ 5 sản phẩm trở xuống</small></article><article><span>SẮP HẾT HẠN</span><strong id="dash-expiring">0</strong><small>Hạn dùng trong 90 ngày</small></article></section><section class="dashboard-chart" data-tab-panel="reports"><div class="dashboard-chart-heading"><div><h2 id="report-chart-title">Doanh thu theo tháng</h2><p id="report-chart-subtitle">Đơn đã giao thành công trong khoảng thời gian đã chọn</p></div><div class="report-filters"><label>Thống kê theo<select id="report-period"><option value="day">Ngày</option><option value="month" selected>Tháng</option><option value="year">Năm</option></select></label><label>Thời gian<input id="report-period-value" type="month"></label></div></div><div id="report-filter-summary" class="report-filter-summary"></div><div id="dashboard-sales-chart" class="dashboard-sales-chart"></div></section>
+        <section class="medicine-panel" id="medicine-manager" data-tab-panel="medicines">
+            <div class="medicine-head">
+                <div><span class="overline">DANH MỤC SẢN PHẨM</span>
+                    <h2>Quản lý thuốc</h2>
+                    <p>Thêm thuốc, xem công dụng và theo dõi hạn sử dụng.</p></div>
+                <button id="medicine-add" class="medicine-primary" type="button">＋ Thêm thuốc</button>
+            </div>
+            <div id="medicine-message" role="status"></div>
+            <div id="medicine-list"></div>
+        </section><section id="warehouse-manager" class="warehouse-panel" data-tab-panel="inventory"><div class="warehouse-heading"><div><span class="overline">VẬN HÀNH KHO</span><h2>Quản lý kho</h2><p>Theo dõi mặt hàng, số lượng tồn, hàng cần bổ sung và hạn sử dụng.</p></div><button id="warehouse-refresh" class="medicine-primary" type="button">Làm mới dữ liệu</button></div><div class="warehouse-metrics"><article><span>TỔNG MẶT HÀNG</span><strong id="warehouse-sku-count">0</strong><small>Mặt hàng đang quản lý</small></article><article><span>TỔNG TỒN KHO</span><strong id="warehouse-stock-total">0</strong><small>Số lượng hiện có</small></article><article><span>CẦN BỔ SUNG</span><strong id="warehouse-low-count">0</strong><small>Tồn kho từ 5 trở xuống</small></article><article><span>CẢNH BÁO HẾT HẠN</span><strong id="warehouse-expiring-count">0</strong><small>Hạn dùng trong 90 ngày</small></article></div><section class="warehouse-stock-panel"><div class="warehouse-section-heading"><div><h3>Hàng hóa trong kho</h3><p>Nhập kho và kiểm kê cập nhật số lượng tồn thực tế.</p></div><div class="warehouse-filters"><input id="warehouse-search" type="search" placeholder="Tìm tên thuốc hoặc hoạt chất"><select id="warehouse-stock-filter"><option value="ALL">Tất cả hàng hóa</option><option value="LOW">Sắp hết hàng</option><option value="EXPIRING">Sắp hết hạn</option></select></div></div><p id="warehouse-stock-message" role="status"></p><div id="warehouse-stock-list" class="warehouse-table-wrap"></div></section></section><dialog id="medicine-dialog">
+            <form id="medicine-form">
+                <div class="medicine-dialog-head">
+                    <div><span class="overline">HỒ SƠ THUỐC</span>
+                        <h2 id="medicine-dialog-title">Thêm thuốc</h2></div>
+                    <button type="button" id="medicine-close" class="medicine-close">×</button>
+                </div>
+                <input type="hidden" id="medicine-id">
+                <div class="medicine-form-grid"><label>Tên thuốc *<input id="medicine-name" required
+                                                                         maxlength="160"></label><label>Hoạt chất / hàm
+                    lượng<input id="medicine-ingredient" maxlength="200"></label><label>Danh mục<select
+                        id="medicine-category">
+                    <option value="">Chọn danh mục</option>
+                    <option>Thuốc không kê đơn</option>
+                    <option>Thực phẩm chức năng</option>
+                    <option>Chăm sóc cá nhân</option>
+                    <option>Thiết bị y tế</option>
+                    <option>Vitamin &amp; Khoáng chất</option>
+                    <option>Mẹ và bé</option>
+                </select></label><label>Hạn sử dụng *<input id="medicine-expiry" type="date" required></label><label>Giá
+                    bán (VNĐ) *<input id="medicine-price" type="number" min="0" step="1000" required></label><label>Số
+                    lượng tồn kho *<input id="medicine-stock" type="number" min="0" step="1" required value="0"></label><label
+                        class="wide">Ảnh thuốc<input id="medicine-image-file" type="file"
+                                                     accept="image/png,image/jpeg,image/webp"><small>JPG, PNG hoặc WebP,
+                    tối đa 2 MB</small><img id="medicine-image-preview" alt="Xem trước ảnh thuốc" hidden></label><label
+                        class="wide">Chức năng / công dụng *<textarea id="medicine-function" required maxlength="2000"
+                                                                      rows="3"></textarea></label><label class="wide">Khuyến
+                    nghị / lưu ý<textarea id="medicine-advice" maxlength="2000" rows="3"></textarea></label></div>
+                <p class="medicine-note">Thông tin tham khảo, không thay thế hướng dẫn của bác sĩ hoặc dược sĩ.</p>
+                <div class="medicine-actions">
+                    <button type="button" id="medicine-cancel">Hủy</button>
+                    <button type="submit" class="medicine-primary">Lưu thuốc</button>
+                </div>
+            </form>
+        </dialog><section id="document-upload" class="upload-center" data-tab-panel="documents">
+            <div class="upload-heading">
+                <div><span class="overline">THƯ VIỆN CÁ NHÂN</span>
+                    <h2>Tài liệu của bạn</h2>
+                    <p>Lưu trữ và truy cập tài liệu công việc trong một không gian.</p></div>
+                <span class="privacy-pill">◈ Chỉ bạn có quyền truy cập</span></div>
+            <form id="document-upload-form">
+                <div class="upload-symbol" aria-hidden="true">↥</div>
+                <div class="upload-copy"><h3>Thêm tài liệu</h3>
+                    <p>PDF, Word, Excel hoặc ảnh · Tối đa 20 MB</p></div>
+                <div class="upload-picker"><input type="file" id="document-file" name="file"
+                                                  accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.gif"
+                                                  required><label for="document-file" class="file-label">Chọn
+                    file</label></div>
+                <button type="submit">Tải lên</button>
+            </form>
+            <p id="document-upload-status" role="status" aria-live="polite"></p></section>
+        <section class="workspace-module-placeholder" id="admin-orders" data-tab-panel="orders"><div class="manage-orders-main manage-orders-embedded"><div class="manage-orders-heading"><div><span class="overline">VẬN HÀNH NHÀ THUỐC</span><h2>Quản lý đơn hàng</h2><p>Xác nhận đơn, theo dõi giao hàng và cập nhật trạng thái cho khách.</p></div><button id="orders-refresh" class="orders-primary" type="button">Làm mới</button></div><section class="order-stats"><article><span>Chờ xác nhận</span><b id="count-pending">0</b></article><article><span>Đã xác nhận</span><b id="count-confirmed">0</b></article><article><span>Đang giao</span><b id="count-shipping">0</b></article><article><span>Đã giao thành công</span><b id="count-delivered">0</b></article></section><section class="manage-orders-panel"><div class="manage-orders-tools"><label class="orders-search">Tìm đơn hàng<input id="order-search" type="search" placeholder="Mã đơn, tên người nhận, số điện thoại"></label><label class="orders-filter">Trạng thái<select id="order-status-filter"><option value="ALL">Tất cả đơn hàng</option><option value="PENDING">Chờ xác nhận</option><option value="CONFIRMED">Đã xác nhận</option><option value="SHIPPING">Đang giao</option><option value="DELIVERED">Giao hàng thành công</option><option value="CANCELLED">Đã hủy</option></select></label></div><p id="manage-orders-message" role="status"></p><div id="manage-orders-list" class="manage-orders-list"></div></section></div></section><dialog id="manage-order-dialog" class="order-detail-dialog"><button id="manage-detail-close" class="order-dialog-close" type="button" aria-label="Đóng">×</button><div id="manage-order-detail"></div></dialog><a id="back-workspace" href="staff.html" hidden></a><button id="manager-logout" type="button" hidden></button><section class="workspace-module-placeholder customers-panel" id="admin-customers" data-tab-panel="customers"><div class="customers-heading"><div><span class="overline">CHĂM SÓC KHÁCH HÀNG</span><h2>Danh sách khách hàng</h2><p>Khách hàng được tổng hợp từ thông tin nhận hàng trong các đơn đã đặt.</p></div><span id="customers-count" class="customers-count">0 khách hàng</span></div><label class="customers-search">Tìm khách hàng<input id="customers-search" type="search" placeholder="Tên, số điện thoại hoặc địa chỉ"></label><p id="customers-message" class="customers-message" role="status">Đang tải danh sách khách hàng…</p><div class="customers-table-wrap"><table class="customers-table"><thead><tr><th>KHÁCH HÀNG</th><th>SỐ ĐIỆN THOẠI</th><th>ĐỊA CHỈ NHẬN HÀNG</th><th>SỐ ĐƠN</th><th>ĐƠN GẦN NHẤT</th></tr></thead><tbody id="customers-list"></tbody></table></div></section><section class="workspace-module-placeholder" id="admin-consult" data-tab-panel="consult"><h2>Tư vấn thuốc</h2><p>Liên hệ tư vấn hiện được mở từ trang cửa hàng; trang quản lý hội thoại chưa có API dữ liệu.</p></section><section class="workspace-module-placeholder" id="admin-account" data-tab-panel="account"><h2>Tài khoản của tôi</h2><p>Thông tin tài khoản đang đăng nhập hiển thị ở phần chào mừng phía trên.</p></section><footer class="workspace-footer">LONG CHÂU · Không gian làm việc nội bộ</footer>
+    </main>
+</div>
+<p id="access-message" role="status">Đang kiểm tra quyền truy cập…</p>
+<script src="js/common.js"></script>
+<script src="js/customers-panel.js?v=1"></script><script src="js/warehouse.js?v=2"></script><script src="js/workspace.js?v=3"></script><script src="js/workspace-dashboard.js?v=4"></script><script src="js/manage-orders.js?v=1"></script><script src="js/medicine-manager.js?v=12"></script><script src="js/staff-medicine-access.js?v=1"></script>
+<script src="js/upload.js?v=7"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

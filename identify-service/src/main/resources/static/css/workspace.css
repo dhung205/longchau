@@ -1,0 +1,1113 @@
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap');
+
+* {
+    box-sizing: border-box
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 25px
+}
+
+body {
+    margin: 0;
+    background: #f5f7fb;
+    color: #20324f;
+    font: 14px 'Be Vietnam Pro', Arial, sans-serif
+}
+
+button, input {
+    font: inherit
+}
+
+button, a {
+    touch-action: manipulation
+}
+
+a {
+    text-decoration: none
+}
+
+button {
+    cursor: pointer
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible {
+    outline: 3px solid #f2bf4d;
+    outline-offset: 4px
+}
+
+[hidden] {
+    display: none !important
+}
+
+.workspace {
+    display: grid;
+    grid-template-columns:252px minmax(0, 1fr);
+    min-height: 100vh
+}
+
+.sidebar {
+    background: #fff;
+    border-right: 1px solid #e5ebf3;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 34px 22px;
+    display: flex;
+    flex-direction: column
+}
+
+.workspace-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #1554c0;
+    font-size: 10px;
+    letter-spacing: 1px
+}
+
+.workspace-brand > span {
+    font-size: 27px;
+    border-radius: 12px;
+    background: #1554c0;
+    color: white;
+    padding: 7px 12px
+}
+
+.workspace-brand strong {
+    display: block;
+    font-size: 20px;
+    letter-spacing: -.8px
+}
+
+.sidebar-label {
+    font-size: 10px;
+    letter-spacing: 1.6px;
+    color: #8b99af;
+    margin: 48px 12px 18px
+}
+
+nav {
+    display: grid;
+    gap: 9px
+}
+
+nav a {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    color: #728097;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 19px
+}
+
+nav a span {
+    font-size: 13px;
+    font-weight: 500
+}
+
+nav a.active {
+    color: #1554c0;
+    background: #eaf1ff
+}
+
+nav a:hover {
+    background: #f0f4fa
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+    border-top: 1px solid #eef1f6;
+    padding: 24px 10px 0;
+    font-size: 12px
+}
+
+.sidebar-bottom a {
+    display: block;
+    margin-top: 20px;
+    color: #7c8ba2
+}
+
+.role-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: #29a78d;
+    border-radius: 50%;
+    margin-right: 7px
+}
+
+main {
+    padding: 0 42px;
+    max-width: 1600px;
+    width: 100%;
+    margin: auto;
+    min-width: 0
+}
+
+.topbar {
+    height: 88px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e4eaf3;
+    color: #8c99ac;
+    font-size: 12px
+}
+
+.topbar b {
+    font-weight: 500;
+    color: #435570
+}
+
+.topbar button {
+    background: white;
+    border: 1px solid #dde5ef;
+    border-radius: 9px;
+    padding: 10px 15px;
+    color: #59708f
+}
+
+.page-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 34px 0 26px
+}
+
+.overline {
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    font-weight: 700;
+    color: #4474c8
+}
+
+h1 {
+    font-size: 29px;
+    letter-spacing: -1px;
+    margin: 10px 0
+}
+
+p {
+    line-height: 1.8
+}
+
+.page-heading p {
+    color: #7c8ba2;
+    margin: 0;
+    font-size: 13px
+}
+
+.role-pill {
+    background: #e8efff;
+    color: #2555a5;
+    padding: 9px 14px;
+    border-radius: 30px;
+    font-size: 11px;
+    white-space: nowrap
+}
+
+.welcome-banner {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(110deg, #1246aa, #2268d1);
+    color: white;
+    border-radius: 20px;
+    padding: 32px 38px
+}
+
+.welcome-banner #welcome {
+    font-size: 12px;
+    color: #cae0ff
+}
+
+.welcome-banner h2 {
+    font-size: 29px;
+    line-height: 1.4;
+    letter-spacing: -.6px;
+    margin: 14px 0
+}
+
+.welcome-banner p {
+    color: #c9dcfa;
+    font-size: 12px
+}
+
+.welcome-banner a {
+    display: inline-block;
+    background: white;
+    color: #2459af;
+    border-radius: 8px;
+    padding: 12px 17px;
+    margin-top: 9px;
+    font-size: 12px;
+    font-weight: 600
+}
+
+.banner-art {
+    width: 260px;
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff09;
+    border: 1px solid #ffffff15;
+    border-radius: 50%;
+    transform: rotate(-8deg)
+}
+
+.banner-art div {
+    font-size: 82px;
+    color: #fff;
+    background: #ffffff12;
+    width: 130px;
+    height: 130px;
+    border-radius: 28px;
+    text-align: center
+}
+
+.banner-art span {
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-top: 15px;
+    color: #c8ddff
+}
+
+.cards {
+    display: grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap: 18px;
+    margin: 24px 0
+}
+
+.cards article {
+    background: #fff;
+    border: 1px solid #e4eaf2;
+    border-radius: 14px;
+    padding: 23px
+}
+
+.card-icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    color: #3d72cd;
+    background: #edf3ff;
+    font-size: 24px
+}
+
+.teal {
+    background: #e6f6f1;
+    color: #259683
+}
+
+.violet {
+    background: #f0ebfc;
+    color: #8d6bc2
+}
+
+.cards h3 {
+    font-size: 14px;
+    margin: 17px 0 8px
+}
+
+.cards p {
+    color: #9aa5b7;
+    font-size: 12px;
+    margin: 0
+}
+
+.workspace-footer {
+    text-align: center;
+    color: #9aa6b8;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 28px 0
+}
+
+#access-message {
+    padding: 30px
+}
+
+@media (min-width: 1500px) {
+    main {
+        padding: 0 65px
+    }
+}
+
+@media (max-width: 1000px) {
+    .workspace {
+        grid-template-columns:210px 1fr
+    }
+
+    main {
+        padding: 0 24px
+    }
+
+    .sidebar {
+        padding: 26px 14px
+    }
+
+    .banner-art {
+        width: 180px;
+        height: 180px
+    }
+
+    .welcome-banner {
+        padding: 28px
+    }
+
+    .cards {
+        gap: 10px
+    }
+
+    .cards article {
+        padding: 18px
+    }
+}
+
+@media (max-width: 720px) {
+    .workspace {
+        display: block
+    }
+
+    .sidebar {
+        position: static;
+        height: auto;
+        padding: 18px;
+        border-right: 0;
+        border-bottom: 1px solid #e4eaf2
+    }
+
+    .sidebar-label, .sidebar-bottom {
+        display: none
+    }
+
+    .workspace-brand {
+        margin-bottom: 16px
+    }
+
+    nav {
+        display: flex;
+        gap: 5px;
+        overflow: auto
+    }
+
+    nav a {
+        padding: 10px;
+        white-space: nowrap
+    }
+
+    main {
+        padding: 0 16px
+    }
+
+    .topbar {
+        height: 64px
+    }
+
+    .topbar > span {
+        font-size: 10px
+    }
+
+    .page-heading {
+        padding: 25px 0;
+        align-items: flex-start
+    }
+
+    h1 {
+        font-size: 24px
+    }
+
+    .page-heading p {
+        font-size: 12px
+    }
+
+    .role-pill {
+        font-size: 9px;
+        padding: 7px 10px
+    }
+
+    .welcome-banner {
+        padding: 25px
+    }
+
+    .welcome-banner h2 {
+        font-size: 25px
+    }
+
+    .banner-art {
+        display: none
+    }
+
+    .cards {
+        grid-template-columns:1fr
+    }
+
+    .cards article {
+        display: grid;
+        grid-template-columns:38px 1fr;
+        column-gap: 15px
+    }
+
+    .cards h3 {
+        margin: 0
+    }
+
+    .cards p {
+        grid-column: 2
+    }
+
+    .card-icon {
+        grid-row: span 2
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto
+    }
+}
+
+.medicine-panel {
+    margin: 28px 0;
+    background: #fff;
+    border: 1px solid #e4eaf2;
+    border-radius: 16px;
+    padding: 24px
+}
+
+.medicine-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px
+}
+
+.medicine-head h2 {
+    font-size: 20px;
+    margin: 7px 0
+}
+
+.medicine-head p {
+    font-size: 12px;
+    color: #8290a5;
+    margin: 0
+}
+
+.medicine-primary {
+    border: 0 !important;
+    background: #1c5bd0 !important;
+    color: white !important;
+    padding: 11px 16px;
+    border-radius: 9px;
+    font: 600 12px 'Be Vietnam Pro', Arial, sans-serif;
+    cursor: pointer
+}
+
+.medicine-table-wrap {
+    overflow: auto
+}
+
+.medicine-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 680px
+}
+
+.medicine-table th, .medicine-table td {
+    text-align: left;
+    padding: 13px 11px;
+    border-bottom: 1px solid #edf0f5;
+    font-size: 12px
+}
+
+.medicine-table th {
+    color: #8492a7;
+    background: #f8faff;
+    font-size: 10px;
+    letter-spacing: .5px
+}
+
+.medicine-table td {
+    color: #435570
+}
+
+.medicine-table td strong {
+    color: #213653
+}
+
+.medicine-status {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 5px 9px;
+    background: #eaf7f1;
+    color: #25825b;
+    font-size: 10px
+}
+
+.medicine-status.soon {
+    background: #fff4df;
+    color: #ad7413
+}
+
+.medicine-status.expired {
+    background: #fff0f0;
+    color: #bd4e58
+}
+
+.medicine-action {
+    border: 1px solid #dce5f1;
+    background: white;
+    color: #3565ad;
+    padding: 7px 10px;
+    border-radius: 7px;
+    margin: 2px;
+    cursor: pointer;
+    font-size: 11px
+}
+
+.medicine-action.delete {
+    color: #b34b55
+}
+
+.medicine-empty {
+    padding: 26px;
+    text-align: center;
+    color: #8795aa;
+    font-size: 12px
+}
+
+.medicine-message {
+    font-size: 12px;
+    color: #3768b4;
+    margin: 8px 0
+}
+
+.medicine-dialog {
+    width: min(640px, calc(100% - 24px));
+    max-height: calc(100dvh - 32px);
+    padding: 0;
+    border: 0;
+    border-radius: 16px;
+    box-shadow: 0 22px 70px #20365335;
+    color: #20324f
+}
+
+.medicine-dialog::backdrop {
+    background: #13274688;
+    backdrop-filter: blur(2px)
+}
+
+#medicine-form {
+    padding: 24px
+}
+
+.medicine-dialog-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px
+}
+
+.medicine-dialog-head h2 {
+    font-size: 21px;
+    margin: 5px 0
+}
+
+.medicine-close {
+    border: 0;
+    background: #f0f3f8;
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    font-size: 22px;
+    cursor: pointer
+}
+
+.medicine-form-grid {
+    display: grid;
+    grid-template-columns:1fr 1fr;
+    gap: 14px
+}
+
+.medicine-form-grid label {
+    display: grid;
+    gap: 7px;
+    color: #536681;
+    font-size: 11px;
+    font-weight: 600
+}
+
+.medicine-form-grid .wide {
+    grid-column: 1/-1
+}
+
+.medicine-form-grid input, .medicine-form-grid textarea {
+    border: 1px solid #dce4ef;
+    border-radius: 8px;
+    padding: 11px;
+    font: 12px 'Be Vietnam Pro', Arial, sans-serif;
+    color: #253956
+}
+
+.medicine-form-grid textarea {
+    resize: vertical;
+    line-height: 1.7
+}
+
+.medicine-note {
+    font-size: 10px;
+    color: #8492a6;
+    line-height: 1.7
+}
+
+.medicine-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    border-top: 1px solid #edf0f4;
+    padding-top: 16px
+}
+
+.medicine-actions button {
+    border: 1px solid #dce4ef;
+    border-radius: 8px;
+    padding: 10px 16px;
+    background: white;
+    color: #526681;
+    cursor: pointer
+}
+
+.medicine-actions .medicine-primary {
+    border: 0;
+    color: white
+}
+
+.medicine-detail {
+    padding: 18px;
+    border: 1px solid #e6ebf3;
+    border-radius: 12px;
+    margin-top: 12px;
+    background: #fbfcff
+}
+
+.medicine-detail h3 {
+    margin: 0 0 12px
+}
+
+.medicine-detail p {
+    font-size: 12px;
+    line-height: 1.8;
+    color: #556882;
+    white-space: pre-line
+}
+
+.medicine-detail strong {
+    color: #233a5b
+}
+
+@media (max-width: 600px) {
+    .medicine-panel {
+        padding: 17px
+    }
+
+    .medicine-head {
+        align-items: flex-start;
+        flex-direction: column
+    }
+
+    .medicine-form-grid {
+        grid-template-columns:1fr
+    }
+
+    .medicine-form-grid .wide {
+        grid-column: auto
+    }
+
+    #medicine-form {
+        padding: 18px
+    }
+}
+
+.catalog-medicine-image {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+    background: #f7f9fd;
+    border-radius: 10px
+}
+
+.catalog-detail-image {
+    display: block;
+    max-width: 100%;
+    width: 220px;
+    height: 180px;
+    object-fit: contain;
+    background: #f7f9fd;
+    border-radius: 12px;
+    margin: 15px auto
+}
+
+.medicine-form-grid #medicine-image-preview {
+    max-width: 160px;
+    max-height: 140px;
+    object-fit: contain;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    padding: 5px
+}
+
+.medicine-form-grid input[type=file] {
+    font-size: 11px
+}
+
+.catalog-medicine-card {
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #e4eaf3;
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+    min-height: 340px;
+    box-shadow: 0 3px 12px #20365308;
+    transition: transform .18s, box-shadow .18s
+}
+
+.catalog-medicine-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px #20365314
+}
+
+.catalog-medicine-image {
+    display: block;
+    width: 100%;
+    height: 170px;
+    object-fit: contain;
+    background: #f5f8fd;
+    border-radius: 11px;
+    padding: 8px
+}
+
+.catalog-medicine-card h3 {
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 4px 0;
+    color: #203653;
+    min-height: 44px
+}
+
+.catalog-medicine-card .product-type {
+    font-size: 11px;
+    color: #2360bd
+}
+
+.catalog-medicine-card p {
+    font-size: 12px;
+    color: #71819a;
+    margin: 0;
+    line-height: 1.55
+}
+
+.catalog-medicine-card small {
+    font-size: 10px;
+    color: #8b98aa;
+    margin-top: auto
+}
+
+.catalog-medicine-card button {
+    border: 0;
+    border-radius: 8px;
+    padding: 10px;
+    background: #1555c5;
+    color: white;
+    font: 600 12px 'Be Vietnam Pro', Arial, sans-serif;
+    cursor: pointer
+}
+
+.catalog-medicine-card button:hover {
+    background: #10449e
+}
+
+.catalog-detail-image {
+    display: block;
+    width: 220px;
+    height: 180px;
+    object-fit: contain;
+    margin: 12px auto;
+    background: #f5f8fd;
+    border-radius: 12px
+}
+
+.medicine-form-grid #medicine-image-preview {
+    max-width: 180px;
+    max-height: 160px;
+    object-fit: contain;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 6px
+}
+
+.medicine-table button {
+    border: 1px solid #dce5f1;
+    background: #fff;
+    border-radius: 7px;
+    padding: 7px 10px;
+    cursor: pointer;
+    color: #3565ad
+}
+
+.medicine-table button[data-del] {
+    color: #b34b55
+}
+
+@media (max-width: 600px) {
+    .catalog-medicine-card {
+        min-height: 310px;
+        padding: 11px
+    }
+
+    .catalog-medicine-image {
+        height: 145px
+    }
+}
+
+.admin-medicine-thumb {
+    width: 58px;
+    height: 54px;
+    object-fit: contain;
+    background: #f4f7fc;
+    border-radius: 8px;
+    padding: 4px
+}
+
+.admin-medicine-detail {
+    display: grid;
+    grid-template-columns:170px minmax(0, 1fr);
+    gap: 18px;
+    margin-top: 16px;
+    padding: 18px;
+    border: 1px solid #e3eaf3;
+    border-radius: 12px;
+    background: #f9fbff
+}
+
+.admin-medicine-detail > img {
+    width: 170px;
+    height: 170px;
+    object-fit: contain;
+    background: white;
+    border-radius: 10px
+}
+
+.admin-medicine-detail p {
+    font-size: 12px;
+    line-height: 1.8;
+    color: #566982;
+    white-space: pre-line
+}
+
+.medicine-table button {
+    border: 1px solid #dce5f1;
+    background: white;
+    border-radius: 7px;
+    padding: 7px 9px;
+    cursor: pointer;
+    color: #3565ad
+}
+
+@media (max-width: 600px) {
+    .admin-medicine-detail {
+        grid-template-columns:1fr
+    }
+
+    .admin-medicine-detail > img {
+        width: 100%;
+        height: 150px
+    }
+}
+
+#medicine-dialog {
+    width: min(700px, calc(100% - 28px));
+    max-height: 90vh;
+    overflow: auto;
+    border: 0;
+    border-radius: 20px;
+    padding: 0;
+    background: #fff;
+    color: #203653;
+    box-shadow: 0 25px 80px #18345b38
+}
+
+#medicine-dialog::backdrop {
+    background: #10233d88;
+    backdrop-filter: blur(3px)
+}
+
+#medicine-form {
+    padding: 25px 28px
+}
+
+.medicine-dialog-head {
+    position: sticky;
+    top: -25px;
+    z-index: 2;
+    margin: -25px -28px 20px;
+    padding: 20px 28px;
+    background: #fff;
+    border-bottom: 1px solid #edf0f5
+}
+
+.medicine-dialog-head h2 {
+    font-size: 20px;
+    margin: 6px 0
+}
+
+.medicine-form-grid {
+    gap: 13px 16px
+}
+
+.medicine-form-grid label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #536782
+}
+
+.medicine-form-grid input:not([type=file]), .medicine-form-grid textarea {
+    width: 100%;
+    border: 1px solid #dce5f0;
+    border-radius: 9px;
+    padding: 10px 12px;
+    background: #fbfcfe;
+    font: 12px 'Be Vietnam Pro', Arial, sans-serif
+}
+
+.medicine-form-grid input:focus, .medicine-form-grid textarea:focus {
+    outline: none;
+    border-color: #6d97df;
+    box-shadow: 0 0 0 3px #eaf1ff;
+    background: white
+}
+
+.medicine-form-grid #medicine-image-preview {
+    display: block;
+    max-width: 150px;
+    max-height: 120px;
+    object-fit: contain;
+    border: 1px solid #e4eaf2;
+    border-radius: 10px;
+    padding: 5px;
+    background: #f7f9fc
+}
+
+.medicine-note {
+    padding: 9px 12px;
+    background: #f5f8fd;
+    border-radius: 8px;
+    font-size: 10px
+}
+
+.medicine-actions {
+    position: sticky;
+    bottom: -25px;
+    margin: 0 -28px -25px;
+    padding: 14px 28px;
+    background: #fff;
+    border-top: 1px solid #edf0f5
+}
+
+.medicine-actions .medicine-primary {
+    padding: 11px 22px
+}
+
+@media (max-width: 560px) {
+    #medicine-form {
+        padding: 18px
+    }
+
+    .medicine-dialog-head {
+        top: -18px;
+        margin: -18px -18px 16px;
+        padding: 16px 18px
+    }
+
+    .medicine-actions {
+        bottom: -18px;
+        margin: 0 -18px -18px;
+        padding: 12px 18px
+    }
+}
+
+.medicine-form-grid select {
+    width: 100%;
+    border: 1px solid #dce5f0;
+    border-radius: 9px;
+    padding: 10px 12px;
+    background: #fbfcfe;
+    font: 12px "Be Vietnam Pro", Arial, sans-serif;
+    color: #435570
+}
+
+.catalog-quantity {
+    width: 62px;
+    text-align: center;
+    border: 1px solid #d9e2ee;
+    border-radius: 8px;
+    padding: 7px
+}
+
+.catalog-buy-controls {
+    display: grid;
+    grid-template-columns:62px 1fr;
+    gap: 7px
+}
+
+.catalog-stock {
+    font-size: 10px;
+    color: #5f806e
+}
+
+.medicine-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 5px;
+    font-size: 11px;
+    font-weight: 600
+}
+
+.medicine-status i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #1caa68;
+    box-shadow: 0 0 0 3px #e5f7ee
+}
+
+.medicine-status.is-alert {
+    color: #b54747
+}
+
+.medicine-status.is-alert i {
+    background: #e34545;
+    box-shadow: 0 0 0 3px #fdeaea
+}
+
+.medicine-status.is-ok {
+    color: #238456
+}
+
+.staff-access-panel{border-color:#dce7f6}.staff-permission-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}.staff-permission-option{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid #e5ebf4;border-radius:10px;background:#fbfcff;cursor:pointer}.staff-permission-option input{margin:3px 0 0;accent-color:#1c5bd0}.staff-permission-option span{display:grid;gap:3px}.staff-permission-option b{font-size:11px;color:#304765}.staff-permission-option small{font-size:10px;line-height:1.5;color:#8492a7}.staff-access-actions{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid #edf0f5}.staff-access-actions p,.staff-list-heading p{font-size:11px;color:#73839b;margin:0}.staff-list-heading{display:flex;justify-content:space-between;align-items:center;margin:24px 0 12px}.staff-list-heading h3{font-size:15px;margin:0 0 4px}.staff-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:16px;border:1px solid #e6ecf4;border-radius:12px;background:#f9fbfe}.staff-form label{display:grid;gap:6px;font-size:10px;color:#6c7d96}.staff-form input{width:100%;min-width:0;padding:9px 10px;border:1px solid #dce5ef;border-radius:8px;background:#fff;font:12px 'Be Vietnam Pro',Arial,sans-serif}.staff-form-buttons{display:flex;gap:8px;align-items:end}.staff-form-buttons button[type=button]{padding:10px 14px;border:1px solid #dce5ef;border-radius:8px;background:#fff;color:#536780;font-size:11px}.staff-table{width:100%;border-collapse:collapse;margin-top:14px}.staff-table th,.staff-table td{text-align:left;padding:11px;border-bottom:1px solid #edf0f5;font-size:11px;color:#52647d}.staff-table th{font-size:9px;letter-spacing:.6px;color:#8795a9;background:#f8faff}.staff-row-actions{white-space:nowrap}.staff-row-actions button{padding:6px 10px;margin-right:5px;border:1px solid #dce5ef;border-radius:7px;background:#fff;color:#3565ad;font-size:10px}.staff-row-actions .staff-delete{color:#b54750;border-color:#f1d9dc;background:#fff8f8}.staff-empty{padding:22px;color:#8391a5;font-size:12px;text-align:center}.staff-message{font-size:11px}@media(max-width:950px){.staff-permission-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.staff-form{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.staff-permission-grid,.staff-form{grid-template-columns:1fr}.staff-access-actions{align-items:flex-start;flex-direction:column}.staff-table th,.staff-table td{padding:8px 6px;font-size:10px}}

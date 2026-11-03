@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f7f8fc">
+  <title>Đăng nhập · Identify</title>
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .layout.login-centered { width: min(100%, 420px); grid-template-columns: minmax(0, 1fr); gap: 0; margin-inline: auto; }
+  </style>
+</head>
+<body>
+  <main class="layout login-centered">
+
+    <section class="card" aria-labelledby="login-title">
+      <h2 id="login-title">Đăng nhập</h2>
+      <p class="card-subtitle">Chọn cách đăng nhập phù hợp với bạn.</p>
+      <button class="google-button" id="google-login" type="button">
+        <svg class="google-icon" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 24.5c0-1.4-.1-2.8-.4-4.1H24v7.8h11a9.4 9.4 0 0 1-4.1 6.2v5.1h6.7c3.9-3.6 6-8.8 6-15Z"/><path fill="#34A853" d="M24 44c5.5 0 10.1-1.8 13.5-4.9l-6.7-5.1c-1.8 1.2-4 2-6.8 2-5.2 0-9.6-3.5-11.2-8.2H5.9v5.2A20 20 0 0 0 24 44Z"/><path fill="#4A90E2" d="M12.8 27.8a12 12 0 0 1 0-7.6V15H5.9a20 20 0 0 0 0 17.9l6.9-5.1Z"/><path fill="#EA4335" d="M24 12.1c3 0 5.7 1 7.8 3.1l5.9-5.9C34.1 6.1 29.5 4 24 4A20 20 0 0 0 5.9 15l6.9 5.2c1.6-4.7 6-8.1 11.2-8.1Z"/></svg>
+        Tiếp tục với Google
+      </button>
+      <div class="divider">hoặc dùng tài khoản Identify</div>
+      <form id="login-form" autocomplete="on">
+        <label for="username">Tên đăng nhập
+          <input id="username" name="username" type="text" autocomplete="username" placeholder="Nhập tên đăng nhập" required>
+        </label>
+        <label for="password">Mật khẩu
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu" required>
+        </label>
+        <button class="primary-button" id="login-submit" type="submit">Đăng nhập</button>
+      </form>
+      <p class="switch-view">Chưa có tài khoản? <a class="text-link" href="register.html">Đăng ký ngay</a></p>
+      <p class="message" id="login-message" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="js/common.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

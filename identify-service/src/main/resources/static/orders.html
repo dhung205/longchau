@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Đơn hàng của tôi · Long Châu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=24">
+  <link rel="stylesheet" href="assets/css/refresh.css?v=43">
+  <link rel="stylesheet" href="assets/css/storefront.css?v=12">
+  <link rel="stylesheet" href="assets/css/cart-polish.css?v=1">
+  <link rel="stylesheet" href="assets/css/orders.css?v=2">
+  <link rel="stylesheet" href="assets/css/order-status.css?v=1">
+</head>
+<body class="storefront-page orders-page-shell">
+  <header class="site-header"><div class="header-main wrap"><a class="brand" href="home.html"><span class="brand-mark">✚</span><span>NHÀ THUỐC<strong>LONG CHÂU</strong></span></a><a class="orders-back" href="home.html">Tiếp tục mua sắm</a><a class="cart" href="cart.html">Giỏ hàng</a></div></header>
+  <main class="wrap orders-page"><div class="orders-heading"><div><span class="eyebrow">TÀI KHOẢN CỦA BẠN</span><h1>Đơn hàng của tôi</h1><p>Theo dõi trạng thái, xem chi tiết hoặc hủy đơn đang chờ xác nhận.</p></div><a href="home.html#products">Mua thêm sản phẩm</a></div>
+    <div id="orders-message" role="status"></div><section id="orders-list" class="orders-list"></section>
+  </main>
+  <dialog id="order-detail-dialog" class="order-detail-dialog"><button id="order-detail-close" class="order-dialog-close" type="button" aria-label="Đóng">×</button><div id="order-detail-content"></div></dialog>
+  <dialog id="orders-qr-dialog" class="order-detail-dialog orders-qr-dialog"><button class="order-dialog-close" type="button" data-close-qr aria-label="Đóng">×</button><span class="eyebrow">THANH TOÁN ĐƠN HÀNG</span><h2>Chuyển khoản QR</h2><div class="qr-demo">QR<br><small>MÔ PHỎNG</small></div><p id="orders-qr-info"></p><p class="qr-demo-note">Chưa kết nối ngân hàng. Xác nhận để mô phỏng cập nhật thanh toán.</p><button id="orders-confirm-payment" type="button" class="orders-primary">Xác nhận thanh toán thử nghiệm</button><button type="button" data-close-qr class="orders-secondary">Để thanh toán sau</button></dialog>
+  <script src="js/common.js?v=2"></script><script src="js/orders.js?v=1"></script>
+</body>
+</html>

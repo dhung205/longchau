@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#f7f8fc">
+  <title>Đăng ký · Identify</title>
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .layout.register-centered { width: min(100%, 480px); grid-template-columns: minmax(0, 1fr); gap: 0; margin-inline: auto; }
+  </style>
+</head>
+<body>
+  <main class="layout register-centered">
+    <section class="card" aria-labelledby="register-title">
+      <h2 id="register-title">Đăng ký</h2>
+      <p class="card-subtitle">Thông tin có dấu * là bắt buộc.</p>
+      <form id="register-form" autocomplete="on">
+        <label for="register-username">Tên đăng nhập *
+          <input id="register-username" name="username" type="text" minlength="4" autocomplete="username" placeholder="Ít nhất 4 ký tự" required>
+        </label>
+        <label for="register-password">Mật khẩu *
+          <input id="register-password" name="password" type="password" minlength="6" autocomplete="new-password" placeholder="Ít nhất 6 ký tự" required>
+        </label>
+        <label for="register-password-confirm">Nhập lại mật khẩu *
+          <input id="register-password-confirm" name="passwordConfirm" type="password" minlength="6" autocomplete="new-password" required>
+        </label>
+        <div class="form-row">
+          <label for="first-name">Tên
+            <input id="first-name" name="firstName" type="text" autocomplete="given-name" placeholder="Tên">
+          </label>
+          <label for="last-name">Họ
+            <input id="last-name" name="lastName" type="text" autocomplete="family-name" placeholder="Họ">
+          </label>
+        </div>
+        <label for="dob">Ngày sinh <span class="optional">(không bắt buộc)</span>
+          <input id="dob" name="dob" type="date" autocomplete="bday">
+        </label>
+        <button class="primary-button" id="register-submit" type="submit">Tạo tài khoản</button>
+      </form>
+      <p class="switch-view">Đã có tài khoản? <a class="text-link" href="index.html">Đăng nhập</a></p>
+      <p class="message" id="register-message" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="js/common.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

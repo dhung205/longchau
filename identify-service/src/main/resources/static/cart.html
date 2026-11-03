@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Giỏ hàng · Long Châu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css?v=24">
+    <link rel="stylesheet" href="assets/css/refresh.css?v=43">
+    <link rel="stylesheet" href="assets/css/storefront.css?v=12">
+    <link rel="stylesheet" href="assets/css/cart.css?v=2">
+    <link rel="stylesheet" href="assets/css/cart-polish.css?v=6">
+</head>
+<body class="storefront-page cart-page-shell">
+<header class="site-header cart-header">
+    <div class="header-main wrap">
+        <a class="brand" href="home.html"><span class="brand-mark">✚</span><span>NHÀ THUỐC<strong>LONG CHÂU</strong></span></a>
+        <form class="cart-search" action="home.html#products" method="get"><input name="q" placeholder="Tìm thuốc, vitamin, thực phẩm bảo vệ sức khỏe..."><button type="submit">Tìm kiếm</button></form>
+        <a class="cart-account-link" href="home.html">Tiếp tục mua sắm</a>
+        <a class="cart-header-link" href="cart.html">🛒 Giỏ hàng</a>
+    </div>
+</header>
+<main class="wrap shop-cart-page">
+    <form id="checkout-form" class="shop-cart-layout">
+        <section class="shop-cart-lines">
+            <div class="cart-panel-heading"><div><h2>Sản phẩm trong giỏ</h2><p>Điều chỉnh số lượng trước khi đặt hàng.</p></div><span id="cart-item-count" class="cart-count-label">0 sản phẩm</span></div>
+            <div class="cart-column-head"><span>Sản phẩm</span><span>Số lượng</span><span>Thành tiền</span></div>
+            <label class="cart-select-all"><input id="cart-select-all" type="checkbox"><span>Chọn tất cả (<b id="cart-selected-count">0/0</b>)</span></label>
+            <div id="cart-lines"></div>
+        </section>
+        <aside class="shop-summary">
+            <h2>Thông tin thanh toán</h2>
+            <div class="cart-summary-line"><span>Tạm tính</span><strong id="cart-subtotal">0</strong></div><div class="cart-voucher"><button id="cart-voucher-button" type="button">Áp dụng ưu đãi để được giảm giá <span aria-hidden="true">›</span></button><p id="cart-voucher-message">Chưa áp dụng voucher</p><div><span>Giảm giá voucher</span><strong id="cart-discount">0</strong></div></div>
+            
+            <div class="cart-summary-total"><span>Thành tiền</span><strong id="cart-total">0</strong></div>
+            <div id="cart-checkout-fields" hidden><div class="cart-recipient"><h3>Thông tin nhận hàng</h3><label>Họ tên<input name="recipientName" required maxlength="160"></label><label>Số điện thoại<input name="phone" type="tel" required maxlength="30"></label><label>Hình thức nhận hàng<select id="shipping-method" name="shippingMethod"><option value="DELIVERY">Giao tận nơi</option><option value="PICKUP">Nhận tại nhà thuốc</option></select></label><div id="delivery-fields"><label>Tỉnh / thành phố<select name="province" id="delivery-province" required><option value="">Chọn tỉnh/thành phố</option></select></label><label>Quận / huyện<select name="district" id="delivery-district" required disabled><option value="">Chọn quận/huyện</option></select></label><label>Địa chỉ cụ thể<textarea name="address" id="delivery-address" rows="2" required></textarea></label></div><div id="pickup-fields" hidden><label>Nhà thuốc nhận hàng<input name="pickupStore" id="pickup-store"></label></div><label>Phương thức thanh toán<select id="payment-method" name="paymentMethod"><option value="CASH">Tiền mặt khi nhận hàng</option><option value="QR">Chuyển khoản QR (mô phỏng)</option></select></label><label>Ghi chú<input name="note" maxlength="500" placeholder="Ghi chú cho đơn hàng"></label></div></div><button id="cart-buy-button" type="button" disabled>Mua hàng →</button>
+            <p class="cart-summary-note">Kiểm tra thông tin nhận hàng trước khi đặt mua.</p>
+            <p id="checkout-message" role="status"></p>
+        </aside>
+    </form>
+</main>
+<dialog id="qr-payment-dialog" class="order-payment-dialog"><form method="dialog"><button class="dialog-x" aria-label="Đóng">×</button></form><span class="eyebrow">THANH TOÁN ĐƠN HÀNG</span><h2>Chuyển khoản QR</h2><div class="qr-demo">QR<br><small>MÔ PHỎNG</small></div><p id="qr-order-info"></p><p class="qr-demo-note">Project chưa kết nối ngân hàng. Nút xác nhận bên dưới chỉ mô phỏng trạng thái thanh toán.</p><button id="confirm-qr-payment" type="button">Xác nhận thanh toán thử nghiệm</button><button id="close-qr-payment" type="button" class="secondary">Để thanh toán sau</button></dialog>
+<script src="js/common.js?v=2"></script>
+<script src="js/vn-address-data.js?v=1"></script>
+<script src="js/cart-modern.js?v=5"></script>
+</body>
+</html>
+
+

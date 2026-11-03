@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quản lý đơn hàng · Long Châu</title>
+  <link rel="stylesheet" href="css/workspace.css?v=16">
+  <link rel="stylesheet" href="assets/css/orders.css?v=2">
+  <link rel="stylesheet" href="css/manage-orders.css?v=1">
+</head>
+<body class="manage-orders-page">
+  <header class="manage-topbar"><a class="workspace-brand" href="home.html"><span>✚</span><div>NHÀ THUỐC<strong>LONG CHÂU</strong></div></a><div><a href="admin.html" id="back-workspace">Về trang quản trị</a><button id="manager-logout" type="button">Đăng xuất</button></div></header>
+  <main class="manage-orders-main">
+    <div class="manage-orders-heading"><div><span class="overline">VẬN HÀNH NHÀ THUỐC</span><h1>Quản lý đơn hàng</h1><p>Xác nhận đơn, theo dõi giao hàng và cập nhật trạng thái cho khách.</p></div><button id="orders-refresh" class="orders-primary" type="button">Làm mới danh sách</button></div>
+    <section class="order-stats" aria-label="Tổng hợp đơn hàng"><article><span>Chờ xác nhận</span><b id="count-pending">0</b></article><article><span>Đã xác nhận</span><b id="count-confirmed">0</b></article><article><span>Đang giao</span><b id="count-shipping">0</b></article><article><span>Đã giao thành công</span><b id="count-delivered">0</b></article></section>
+    <section class="manage-orders-panel"><div class="manage-orders-tools"><label class="orders-search">Tìm đơn hàng<input id="order-search" type="search" placeholder="Mã đơn, tên người nhận, số điện thoại"></label><label class="orders-filter">Trạng thái<select id="order-status-filter"><option value="ALL">Tất cả đơn hàng</option><option value="PENDING">Chờ xác nhận</option><option value="CONFIRMED">Đã xác nhận</option><option value="SHIPPING">Đang giao</option><option value="DELIVERED">Giao hàng thành công</option><option value="CANCELLED">Đã hủy</option></select></label></div><p id="manage-orders-message" role="status"></p><div id="manage-orders-list" class="manage-orders-list"></div></section>
+  </main>
+  <dialog id="manage-order-dialog" class="order-detail-dialog"><button id="manage-detail-close" class="order-dialog-close" type="button" aria-label="Đóng">×</button><div id="manage-order-detail"></div></dialog>
+  <script src="js/common.js?v=2"></script><script src="js/manage-orders.js?v=1"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chi tiết thuốc · Nhà thuốc Long Châu</title>
+  <link rel="stylesheet" href="assets/css/style.css?v=24">
+  <link rel="stylesheet" href="assets/css/refresh.css?v=43">
+  <link rel="stylesheet" href="assets/css/storefront.css?v=10">
+  <link rel="stylesheet" href="assets/css/product.css?v=2">
+</head>
+<body class="storefront-page product-page">
+  <header class="site-header">
+    <div class="header-main wrap">
+      <a class="brand" href="home.html"><span class="brand-mark">✚</span><span>NHÀ THUỐC<strong>LONG CHÂU</strong></span></a>
+      <label class="search"><span>⌕</span><input id="product-search" placeholder="Tìm thuốc, vitamin, thực phẩm bảo vệ sức khỏe..."><button id="product-search-button" type="button">Tìm kiếm</button></label>
+      <a class="account" id="product-account" href="index.html">Đăng nhập</a>
+      <a class="cart" href="cart.html">🛒 Giỏ hàng</a>
+    </div>
+  </header>
+  <main class="wrap detail-main">
+    <nav class="detail-breadcrumb"><a href="home.html">Trang chủ</a><span>/</span><a href="home.html#products">Sản phẩm</a><span>/</span><span id="detail-breadcrumb-name">Chi tiết thuốc</span></nav>
+    <section id="detail-state" class="detail-state" hidden><h1>Không tìm thấy thuốc</h1><p id="detail-error">Thuốc có thể đã bị xóa khỏi danh mục.</p><a href="home.html#products">Quay lại danh sách thuốc</a></section>
+    <section id="detail-product" hidden>
+      <div class="detail-top">
+        <div class="detail-gallery"><div class="detail-image-box"><img id="detail-image" alt="Ảnh thuốc"><div id="detail-image-empty" hidden>Chưa có ảnh sản phẩm</div></div><p>Hình ảnh sản phẩm do nhà thuốc cung cấp</p></div>
+        <div class="detail-info">
+          <p class="detail-brand" id="detail-category">Nhóm sản phẩm</p>
+          <h1 id="detail-name"></h1>
+          <p class="detail-code">Mã sản phẩm: <span id="detail-code"></span></p>
+          <p class="detail-price"><strong id="detail-price-value"></strong><span> / Sản phẩm</span></p>
+          <div class="detail-option"><span>Đơn vị tính</span><b class="detail-unit">Sản phẩm</b></div>
+          <div class="detail-option"><label for="detail-quantity">Chọn số lượng</label><div class="detail-quantity"><button id="detail-minus" type="button" aria-label="Giảm số lượng">−</button><input id="detail-quantity" type="number" min="1" value="1"><button id="detail-plus" type="button" aria-label="Tăng số lượng">+</button></div></div>
+          <p class="detail-stock" id="detail-stock"></p>
+          <div class="detail-actions"><button id="detail-buy" type="button">Chọn mua</button><a href="cart.html">Xem giỏ hàng</a></div>
+          <a class="product-consult-link" href="home.html#advice">Tư vấn ngay</a>
+          <p class="detail-description" id="detail-description"></p>
+          <dl class="detail-facts"><dt>Nhóm sản phẩm</dt><dd id="detail-fact-category"></dd><dt>Hoạt chất</dt><dd id="detail-ingredient"></dd><dt>Tồn kho</dt><dd id="detail-stock-fact"></dd><dt>Hạn sử dụng</dt><dd id="detail-expiry"></dd></dl>
+        </div>
+      </div>
+      <section class="detail-extra"><h2>Thông tin sản phẩm</h2><div class="detail-extra-grid"><div><h3>Công dụng</h3><p id="detail-function"></p></div><div><h3>Khuyến nghị / lưu ý</h3><p id="detail-recommendation"></p></div></div><small>Thông tin tham khảo. Hãy đọc kỹ hướng dẫn sử dụng hoặc hỏi dược sĩ.</small></section>
+    </section>
+  </main>
+  <script src="js/common.js?v=2"></script>
+  <script src="js/product-page.js?v=3"></script>
+</body>
+</html>
