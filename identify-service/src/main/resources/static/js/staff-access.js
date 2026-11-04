@@ -6,11 +6,7 @@
     ['MEDICINE_READ', 'Xem thuốc', 'Xem danh sách và hồ sơ thuốc'],
     ['MEDICINE_CREATE', 'Thêm thuốc', 'Tạo thuốc và cập nhật ảnh'],
     ['MEDICINE_UPDATE', 'Sửa thuốc', 'Sửa giá, tồn kho và thông tin thuốc'],
-    ['MEDICINE_DELETE', 'Xóa thuốc', 'Xóa thuốc khỏi danh mục'],
-    ['STAFF_READ', 'Xem nhân viên', 'Xem danh sách tài khoản nhân viên'],
-    ['STAFF_CREATE', 'Thêm nhân viên', 'Tạo tài khoản STAFF mới'],
-    ['STAFF_UPDATE', 'Sửa nhân viên', 'Cập nhật hồ sơ hoặc mật khẩu nhân viên'],
-    ['STAFF_DELETE', 'Xóa nhân viên', 'Xóa tài khoản có vai trò STAFF']
+    ['MEDICINE_DELETE', 'Xóa thuốc', 'Xóa thuốc khỏi danh mục']
   ];
   const permissionBox = document.getElementById('staff-permissions');
   const permissionStatus = document.getElementById('staff-permission-status');

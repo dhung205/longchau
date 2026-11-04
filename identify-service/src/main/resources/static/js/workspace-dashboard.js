@@ -18,6 +18,18 @@
   const chartTitle = document.getElementById('report-chart-title');
   const chartSubtitle = document.getElementById('report-chart-subtitle');
   const reportSummary = document.getElementById('report-filter-summary');
+  const reportFilters = document.querySelector('.report-filters');
+  let exportButton = document.getElementById('report-export');
+  if (reportFilters && !exportButton) {
+    exportButton = document.createElement('button');
+    exportButton.id = 'report-export';
+    exportButton.type = 'button';
+    exportButton.className = 'report-export-button';
+    exportButton.textContent = 'Xuất Excel';
+    exportButton.title = 'Tải báo cáo doanh thu đang chọn, mở bằng Excel';
+    exportButton.disabled = true;
+    reportFilters.append(exportButton);
+  }
   const now = new Date();
   let allOrders = [];
   const pad = value => String(value).padStart(2, '0');
@@ -88,14 +100,61 @@
     });
   }
 
+  function csvCell(value) {
+    if (typeof value === 'number' && Number.isFinite(value)) return String(value);
+    let text = String(value ?? '');
+    if (/^[=+@-]/.test(text)) text = `'${text}`;
+    return `"${text.replace(/"/g, '""')}"`;
+  }
+
+  function exportRevenueReport() {
+    const report = getPeriodData();
+    if (!periodValue?.value) {
+      window.alert('Vui lòng chọn ngày, tháng hoặc năm trước khi xuất báo cáo.');
+      return;
+    }
+    const rows = [
+      ['Mã đơn hàng', 'Thời gian đặt', 'Khách hàng', 'Số điện thoại', 'Số lượng sản phẩm', 'Trạng thái', 'Doanh thu'],
+      ...report.orders.map(order => [
+        order.id,
+        order.createdAt ? new Date(order.createdAt).toLocaleString('vi-VN') : '',
+        order.recipientName,
+        order.phone,
+        (order.items || []).reduce((sum, item) => sum + (Number(item.quantity) || 0), 0),
+        'Giao hàng thành công',
+        Number(order.total) || 0
+      ])
+    ];
+    const csv = 'sep=;\r\n' + rows.map(row => row.map(csvCell).join(';')).join('\r\n');
+    // Excel detects UTF-16LE reliably on direct open, including Vietnamese diacritics.
+    const bytes = new Uint8Array(2 + csv.length * 2);
+    bytes[0] = 0xff;
+    bytes[1] = 0xfe;
+    for (let index = 0; index < csv.length; index++) {
+      const code = csv.charCodeAt(index);
+      bytes[2 + index * 2] = code & 0xff;
+      bytes[3 + index * 2] = code >> 8;
+    }
+    const url = URL.createObjectURL(new Blob([bytes], { type: 'text/csv;charset=utf-16le' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `bao-cao-doanh-thu-${report.mode}-${periodValue.value}.csv`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
   async function loadOrderMetrics() {
     try { allOrders = await window.Identify.request('/orders/manage', { headers: { Authorization: `Bearer ${window.Identify.getToken()}` } }); }
     catch { allOrders = []; }
+    if (exportButton) exportButton.disabled = false;
     show('dash-orders', String(allOrders.filter(order => order.status === 'DELIVERED').length));
     renderRevenueReport();
   }
   periodSelect?.addEventListener('change', () => { periodValue.value = ''; updatePeriodInput(); renderRevenueReport(); });
   periodValue?.addEventListener('change', renderRevenueReport);
+  exportButton?.addEventListener('click', exportRevenueReport);
   updatePeriodInput();
   loadOrderMetrics();
 
@@ -110,6 +169,7 @@
 
   function activateTab(tabName, updateAddress = true) {
     const activeName = tabs.some(tab => tab.dataset.workspaceTab === tabName) ? tabName : 'medicines';
+    document.body.classList.toggle('consultation-tab-active', activeName === 'consult');
     tabs.forEach(tab => {
       const active = tab.dataset.workspaceTab === activeName;
       tab.classList.toggle('active', active);
@@ -121,7 +181,7 @@
       panel.hidden = !panel.dataset.tabPanel.split(/\s+/).includes(activeName);
       panel.setAttribute('role', 'tabpanel');
     });
-    if (topbarLabel) topbarLabel.textContent = `/ ${tabLabels.get(activeName) || 'Tổng quan'}`;
+    if (topbarLabel) topbarLabel.textContent = tabLabels.get(activeName) || 'Tổng quan';
     if (activeName === 'inventory') {
       if (medicineTitle) medicineTitle.textContent = 'Quản lý kho';
       if (medicineDescription) medicineDescription.textContent = 'Theo dõi số lượng tồn kho, thuốc sắp hết và hạn sử dụng.';

@@ -38,6 +38,20 @@ public class StaffAccountController {
         return ApiResponse.<List<UserResponse>>builder().result(staff).build();
     }
 
+    @GetMapping("/directory")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
+    public ApiResponse<List<StaffDirectoryEntry>> directory() {
+        var staff = users.findAll().stream()
+                .filter(User::isActive)
+                .filter(user -> user.getRoles() != null && user.getRoles().stream()
+                        .anyMatch(role -> "STAFF".equals(role.getName())))
+                .map(user -> new StaffDirectoryEntry(user.getFullName(), "Nhân viên nhà thuốc"))
+                .toList();
+        return ApiResponse.<List<StaffDirectoryEntry>>builder().result(staff).build();
+    }
+
+    public record StaffDirectoryEntry(String fullName, String position) {}
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN') or hasAuthority('STAFF_CREATE')")
     public ApiResponse<UserResponse> create(@Valid @RequestBody StaffAccountRequest request) {

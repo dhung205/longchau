@@ -16,6 +16,51 @@
     if (welcome) welcome.textContent = `Xin chào, ${displayName}`;
     const sidebarName = document.getElementById('sidebar-user-name');
     if (sidebarName) sidebarName.textContent = displayName;
+    const profileValues = {
+      'staff-profile-name': displayName,
+      'staff-profile-username': user.username || 'Chưa cập nhật',
+      'staff-profile-email': user.email || 'Chưa cập nhật',
+      'staff-profile-dob': user.dob ? new Date(`${user.dob}T00:00:00`).toLocaleDateString('vi-VN') : 'Chưa cập nhật'
+    };
+    Object.entries(profileValues).forEach(([id, value]) => {
+      const field = document.getElementById(id);
+      if (field) field.textContent = value;
+    });
+    const profileAvatar = document.getElementById('staff-profile-avatar');
+    if (profileAvatar) profileAvatar.textContent = displayName.split(/\s+/).slice(-2).map(part => part[0]).join('').toUpperCase();
+    if (expected === 'STAFF' && document.getElementById('staff-directory-list')) {
+      const directoryMessage = document.getElementById('staff-directory-message');
+      const directoryList = document.getElementById('staff-directory-list');
+      try {
+        const response = await request('/admin/staff/directory', {headers:{Authorization:`Bearer ${token}`}});
+        const staffMembers = response.result || [];
+        document.getElementById('staff-directory-count').textContent = `${staffMembers.length} nhân viên đang hoạt động`;
+        directoryMessage.textContent = '';
+        directoryList.replaceChildren();
+        if (!staffMembers.length) directoryMessage.textContent = 'Chưa có nhân viên đang hoạt động.';
+        staffMembers.forEach(member => {
+          const card = document.createElement('article');
+          card.className = 'staff-directory-card';
+          const initials = document.createElement('span');
+          initials.className = 'staff-directory-avatar';
+          initials.textContent = String(member.fullName || 'NV').split(/\s+/).slice(-2).map(part => part[0]).join('').toUpperCase();
+          const details = document.createElement('div');
+          const name = document.createElement('b');
+          name.textContent = member.fullName || 'Chưa cập nhật tên';
+          const position = document.createElement('small');
+          position.textContent = member.position || 'Nhân viên nhà thuốc';
+          const status = document.createElement('span');
+          status.className = 'staff-directory-status';
+          status.textContent = 'Đang hoạt động';
+          details.append(name, position);
+          card.append(initials, details, status);
+          directoryList.append(card);
+        });
+      } catch (error) {
+        document.getElementById('staff-directory-count').textContent = 'Không tải được danh sách';
+        directoryMessage.textContent = error.message;
+      }
+    }
     document.getElementById('workspace').hidden = false;
     document.getElementById('access-message').hidden = true;
   } catch {

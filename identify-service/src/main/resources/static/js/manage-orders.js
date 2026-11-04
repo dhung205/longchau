@@ -21,14 +21,27 @@
   const detail = document.getElementById('manage-order-detail');
   const search = document.getElementById('order-search');
   const filter = document.getElementById('order-status-filter');
+  const refreshButton = document.getElementById('orders-refresh');
   const money = amount => `${new Intl.NumberFormat('vi-VN').format(Number(amount) || 0)}`;
   const statusNames = { PENDING: 'Chờ xác nhận', CONFIRMED: 'Đã xác nhận', SHIPPING: 'Đang giao', DELIVERED: 'Giao hàng thành công', CANCELLED: 'Đã hủy' };
   const nextStatus = { PENDING: ['CONFIRMED', 'Xác nhận đơn hàng'], CONFIRMED: ['SHIPPING', 'Bắt đầu giao hàng'], SHIPPING: ['DELIVERED', 'Xác nhận giao thành công'] };
   let orders = [];
+  let lastPendingCount = null;
+  let refreshBusy = false;
 
   function refreshStats() {
     for (const status of ['PENDING', 'CONFIRMED', 'SHIPPING', 'DELIVERED'])
       document.getElementById(`count-${status.toLowerCase()}`).textContent = orders.filter(order => order.status === status).length;
+    const pending = orders.filter(order => order.status === 'PENDING').length;
+    document.querySelectorAll('[data-order-notice-count]').forEach(badge => {
+      badge.textContent = pending > 99 ? '99+' : String(pending);
+      badge.hidden = pending === 0;
+    });
+    if (lastPendingCount !== null && pending > lastPendingCount) {
+      const added = pending - lastPendingCount;
+      message.textContent = added === 1 ? 'Có đơn hàng mới vừa được đặt.' : `Có ${added} đơn hàng mới vừa được đặt.`;
+    }
+    lastPendingCount = pending;
   }
 
   function render() {
@@ -77,12 +90,29 @@
     footer.append(total, actions); card.append(header, meta, products, footer); return card;
   }
 
-  async function load() {
-    message.textContent = 'Đang tải đơn hàng…';
+  async function load({ silent = false, manual = false } = {}) {
+    if (refreshBusy) return;
+    refreshBusy = true;
+    if (!silent) message.textContent = 'Đang tải đơn hàng…';
+    if (manual && refreshButton) {
+      refreshButton.disabled = true;
+      refreshButton.classList.add('is-refreshing');
+      refreshButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4.5h-4.5"/></svg><span>Đang tải…</span>';
+    }
     try {
       orders = await api.request('/orders/manage', { headers });
-      refreshStats(); render(); message.textContent = '';
-    } catch (error) { message.textContent = `Không tải được đơn hàng: ${error.message}`; }
+      message.textContent = '';
+      refreshStats(); render();
+      if (manual && !message.textContent) message.textContent = `Đã cập nhật lúc ${new Date().toLocaleTimeString('vi-VN', {hour:'2-digit',minute:'2-digit'})}.`;
+    } catch (error) { if (!silent) message.textContent = `Không tải được đơn hàng: ${error.message}`; }
+    finally {
+      refreshBusy = false;
+      if (manual && refreshButton) {
+        refreshButton.disabled = false;
+        refreshButton.classList.remove('is-refreshing');
+        refreshButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4.5h-4.5"/></svg><span>Làm mới</span>';
+      }
+    }
   }
 
   async function changeStatus(order, status) {
@@ -120,7 +150,10 @@
     } catch (error) { message.textContent = `Không tải được chi tiết đơn: ${error.message}`; }
   }
 
-  document.getElementById('orders-refresh').addEventListener('click', load);
+  refreshButton.addEventListener('click', () => load({manual: true}));
+  document.querySelectorAll('[data-order-notice]').forEach(button => button.addEventListener('click', () => {
+    document.querySelector('[data-workspace-tab="orders"]')?.click();
+  }));
   document.getElementById('manage-detail-close').addEventListener('click', () => detailDialog.close());
   search.addEventListener('input', render); filter.addEventListener('change', render);
   document.getElementById('manager-logout').addEventListener('click', async () => {
@@ -128,4 +161,6 @@
     api.clearToken(); api.goLogin();
   });
   load();
+  window.setInterval(() => { if (!document.hidden) load({silent: true}); }, 15000);
+  window.addEventListener('focus', () => load({silent: true}));
 })();

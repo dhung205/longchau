@@ -63,3 +63,10 @@
 
 
 .catalog-buy-controls.catalog-login-required{grid-template-columns:minmax(0,1fr)!important}.catalog-buy-controls.catalog-login-required .catalog-quantity[hidden]{display:none!important}
+
+/* Customer consultation file attachment and status styling. */
+.consult-file-hint { margin: -5px 0 0; color: #7586a1; font-size: 11px; }
+.consult-attachment-name { max-width: 180px; overflow: hidden; color: #47638a; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.consult-file-download { display: inline-block; margin-top: 8px; color: #dceaff; font-size: 12px; text-decoration: underline; overflow-wrap: anywhere; }
+.consult-panel #consultForm > button[type="submit"] { border: 0; border-radius: 12px; padding: 11px 14px; color: #fff; background: #1555d9; font: 700 13px 'Be Vietnam Pro', Arial, sans-serif; }
+.consult-panel #consultForm > button[type="submit"]:disabled { opacity: .65; }

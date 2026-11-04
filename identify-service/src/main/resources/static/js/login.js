@@ -33,7 +33,12 @@
         })
       }));
     } catch (error) {
-      setMessage(message, error.message, 'error');
+      const friendlyMessage = error.code === 1006
+        ? 'Mật khẩu không đúng, vui lòng nhập lại.'
+        : error.code === 1005
+          ? 'Tên đăng nhập không tồn tại. Vui lòng kiểm tra lại.'
+          : error.message;
+      setMessage(message, friendlyMessage, 'error');
     } finally {
       busy(submit, false, 'Đăng nhập');
     }

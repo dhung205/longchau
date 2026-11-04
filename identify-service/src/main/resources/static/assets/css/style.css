@@ -1970,6 +1970,7 @@ footer#stores {
   justify-content: flex-start;
 }
 .consult-bubble {
+  width: fit-content;
   max-width: min(78%, 520px);
   padding: 10px 12px;
   border: 1px solid var(--line);
@@ -1979,10 +1980,10 @@ footer#stores {
   box-shadow: 0 3px 10px rgba(20, 45, 78, 0.04);
 }
 .consult-message.is-customer .consult-bubble {
-  border-color: #1250dc;
+  border-color: #ccefe5;
   border-bottom-right-radius: 5px;
-  background: #1250dc;
-  color: #fff;
+  background: #d9f5ec;
+  color: #31415d;
 }
 .consult-message.is-staff .consult-bubble {
   border-bottom-left-radius: 5px;
@@ -2005,10 +2006,12 @@ footer#stores {
   overflow-wrap: anywhere;
 }
 .consult-bubble small {
+  display: none;
   margin-top: 7px;
   font-size: 10px;
   opacity: 0.72;
 }
+.consult-bubble.show-chat-time .consult-chat-time { display: block; }
 .consult-attachment {
   display: block;
   width: min(220px, 100%);
@@ -2543,7 +2546,7 @@ footer#stores {
 /* Product consultation and chat links */
 .consult-bubble a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
 .consult-message.is-staff .consult-bubble a{color:var(--blue-700)}
-.consult-message.is-customer .consult-bubble a{color:#fff}
+.consult-message.is-customer .consult-bubble a{color:#1250dc}
 .detail-actions .detail-consult-open{grid-column:1/-1;background:#edf3ff;color:#1250dc;border:1px solid #cbdcf8}
 .detail-actions .detail-consult-open:hover{background:#dfeaff}
 .detail-consult-form{display:grid;gap:10px;margin-top:14px;padding:16px;border:1px solid #dce7f7;border-radius:16px;background:#f7faff}

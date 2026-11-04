@@ -27,7 +27,11 @@
     document.getElementById('warehouse-stock-total').textContent = new Intl.NumberFormat('vi-VN').format(medicines.reduce((sum, medicine) => sum + Number(medicine.stock || 0), 0));
     document.getElementById('warehouse-low-count').textContent = String(medicines.filter(medicine => Number(medicine.stock || 0) <= 5).length);
     document.getElementById('warehouse-expiring-count').textContent = String(medicines.filter(expiring).length);
-    if (!rows.length) { stockList.innerHTML = '<p class="warehouse-empty">Không có hàng hóa phù hợp.</p>'; return; }
+    if (!rows.length) {
+      const emptyMessage = filter === 'LOW' ? 'Hiện không có mặt hàng nào cần bổ sung.' : filter === 'EXPIRING' ? 'Hiện không có mặt hàng nào sắp hết hạn hoặc đã hết hạn.' : query ? 'Không tìm thấy hàng hóa phù hợp với từ khóa.' : 'Chưa có thuốc trong kho.';
+      stockList.innerHTML = `<p class="warehouse-empty">${emptyMessage}</p>`;
+      return;
+    }
     stockList.innerHTML = `<table class="warehouse-table"><thead><tr><th>HÀNG HÓA</th><th>HẠN DÙNG</th><th>TỒN KHO</th><th>TÌNH TRẠNG</th><th>THAO TÁC KHO</th></tr></thead><tbody>${rows.map(medicine => {
       const low = Number(medicine.stock || 0) <= 5;
       const expiry = expiryState(medicine);
@@ -40,7 +44,7 @@
 
   async function load() {
     stockMessage.textContent = 'Đang tải hàng hóa…';
-    try { medicines = await api.request('/catalog/medicines'); render(); stockMessage.textContent = ''; }
+    try { medicines = await api.request('/catalog/medicines', { cache: 'no-store' }); render(); stockMessage.textContent = ''; }
     catch (error) { stockMessage.textContent = `Không tải được hàng hóa: ${error.message}`; }
   }
   async function saveStock(medicine, stock, success) {

@@ -1,0 +1,250 @@
+/* Final shared overrides for admin and staff workspace pages. */
+body[data-role], body[data-role] * {
+    font-family: 'Be Vietnam Pro', Arial, sans-serif;
+}
+body[data-role] .workspace { --workspace-sidebar-width: 228px; }
+body[data-role] main {
+    padding: 88px 28px 0;
+}
+body[data-role] .topbar {
+    position: fixed;
+    top: 0;
+    left: var(--workspace-sidebar-width);
+    z-index: 100;
+    width: calc(100% - var(--workspace-sidebar-width));
+    height: 62px;
+    padding: 0 28px;
+    background: #f3f6fb;
+    box-shadow: 0 1px 0 #e4eaf2;
+}
+body[data-role] .topbar > span { min-width: 0; font-size: 14px; }
+body[data-role] .workspace-order-notice {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    margin: 0 12px 0 auto;
+    padding: 0;
+    border: 1px solid #dce5f1;
+    border-radius: 12px;
+    background: #fff;
+    color: #2459a6;
+}
+body[data-role] .workspace-order-notice svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+body[data-role] .topbar #logout { flex: 0 0 auto; }
+body[data-role] .order-nav-badge,
+body[data-role] .workspace-order-notice [data-order-notice-count] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 99px;
+    background: #e54859;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+}
+body[data-role] .workspace-nav .order-nav-badge { margin-left: auto; flex: 0 0 auto; }
+body[data-role] .workspace-order-notice [data-order-notice-count] {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    border: 2px solid #f3f6fb;
+}
+body[data-role] [data-order-notice-count][hidden] { display: none !important; }
+body[data-role] .workspace-nav a span { font-size: 14px; }
+body[data-role] .workspace-nav a { font-size: 18px; }
+@media (min-width: 1500px) {
+    body[data-role] main { padding-left: 65px; padding-right: 65px; }
+    body[data-role] .topbar { padding-left: 65px; padding-right: 65px; }
+}
+@media (max-width: 1050px) {
+    body[data-role] .workspace { --workspace-sidebar-width: 205px; }
+    body[data-role] main { padding: 88px 18px 0; }
+    body[data-role] .topbar { padding-left: 18px; padding-right: 18px; }
+}
+@media (max-width: 720px) {
+    body[data-role] main { padding: 0 12px; }
+    body[data-role] .topbar {
+        position: sticky;
+        top: 0;
+        left: auto;
+        width: auto;
+        height: 64px;
+        padding: 0;
+    }
+}
+
+/* Consultation inbox shared by the administrator and staff workspaces. */
+body[data-role] .consult-nav-badge {
+    display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+    min-width: 21px; height: 21px; margin-left: auto; padding: 0 6px; border-radius: 99px;
+    background: #e54859; color: #fff; font-size: 11px; font-weight: 700;
+}
+body[data-role] .consult-nav-badge[hidden] { display: none !important; }
+body[data-role] .consultation-workspace { padding: 25px; }
+body[data-role] .consultation-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 14px; }
+body[data-role] .consultation-heading h2 { margin: 5px 0; color: #263d5d; font-size: 24px; }
+body[data-role] .consultation-heading p { margin: 0; color: #71819a; font-size: 14px; }
+body[data-role] .consultations-refresh, body[data-role] .consultations-reply-button {
+    border: 0; border-radius: 10px; padding: 11px 16px; color: #fff; background: #1555d9;
+    font: 600 14px 'Be Vietnam Pro', Arial, sans-serif; cursor: pointer;
+}
+body[data-role] .consultations-status { margin: 8px 0; color: #657792; font-size: 14px; }
+body[data-role] .consultations-list { display: grid; gap: 14px; }
+body[data-role] .consultation-card { padding: 18px; border: 1px solid #e1e9f4; border-radius: 14px; background: #fff; }
+body[data-role] .consultation-card-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 12px; }
+body[data-role] .consultation-card-head > div { display: grid; gap: 4px; }
+body[data-role] .consultation-card-head strong { color: #263d5d; font-size: 16px; }
+body[data-role] .consultation-card-head small { color: #7889a1; font-size: 12px; }
+body[data-role] .consultation-state { border-radius: 99px; padding: 6px 10px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+body[data-role] .consultation-state.is-pending { color: #9b5a00; background: #fff4d8; }
+body[data-role] .consultation-state.is-answered { color: #267247; background: #e7f7ee; }
+body[data-role] .consultation-question { margin: 0; padding: 13px 15px; border-radius: 11px; color: #2d4565; background: #f4f7fc; font-size: 14px; line-height: 1.65; white-space: pre-wrap; overflow-wrap: anywhere; }
+body[data-role] .consultation-attachment { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-top: 10px; }
+body[data-role] .consultation-file-link, body[data-role] .consultation-download { border: 1px solid #d7e3f3; border-radius: 9px; padding: 8px 11px; color: #2459a6; background: #f7faff; font: 500 13px 'Be Vietnam Pro', Arial, sans-serif; cursor: pointer; }
+body[data-role] .consultation-previous-answer { margin-top: 11px; padding: 12px 14px; border-left: 3px solid #35a576; border-radius: 8px; background: #f0faf5; color: #315c49; }
+body[data-role] .consultation-previous-answer b { font-size: 13px; }
+body[data-role] .consultation-previous-answer p { margin: 5px 0 0; font-size: 14px; white-space: pre-wrap; }
+body[data-role] .consultation-reply-form { display: grid; justify-items: end; gap: 9px; margin-top: 13px; }
+body[data-role] .consultation-reply-form textarea { width: 100%; min-height: 74px; padding: 11px 12px; resize: vertical; border: 1px solid #dbe5f1; border-radius: 10px; color: #283e5d; background: #fff; font: 14px 'Be Vietnam Pro', Arial, sans-serif; }
+body[data-role] .consultations-empty { padding: 38px 18px; border: 1px dashed #d9e3f0; border-radius: 13px; color: #7889a1; text-align: center; font-size: 14px; }
+@media (max-width: 720px) {
+    body[data-role] .consultation-workspace { padding: 16px; }
+    body[data-role] .consultation-heading { align-items: flex-start; }
+    body[data-role] .consultation-heading h2 { font-size: 20px; }
+    body[data-role] .consultation-card { padding: 14px; }
+}
+
+/* Compact one-customer-at-a-time consultation inbox. */
+body[data-role] .consultations-inbox{display:grid;grid-template-columns:minmax(230px,280px) minmax(0,1fr);min-height:480px;overflow:hidden;border:1px solid #e3eaf3;border-radius:15px;background:#fff}
+body[data-role] .consultations-users{max-height:650px;overflow-y:auto;padding:8px;border-right:1px solid #e8edf4;background:#f8faff}
+body[data-role] .consultation-user{display:grid;grid-template-columns:38px minmax(0,1fr) auto;align-items:center;gap:10px;width:100%;margin:0 0 6px;padding:10px;border:1px solid transparent;border-radius:11px;background:transparent;text-align:left;font:inherit;cursor:pointer}
+body[data-role] .consultation-user:hover{background:#eef4ff}
+body[data-role] .consultation-user.is-selected{border-color:#d8e5fa;background:#eaf2ff}
+body[data-role] .consultation-user-avatar{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:#dce9ff;color:#1b58bd;font-size:12px;font-weight:800}
+body[data-role] .consultation-user-details{display:grid;min-width:0;gap:3px}
+body[data-role] .consultation-user-details strong{overflow:hidden;color:#263d5d;font-size:13px;text-overflow:ellipsis;white-space:nowrap}
+body[data-role] .consultation-user-details small{overflow:hidden;color:#75849a;font-size:11px;text-overflow:ellipsis;white-space:nowrap}
+body[data-role] .consultation-user-details .consultation-user-preview{color:#526783}
+body[data-role] .consultation-user-pending{display:grid;place-items:center;min-width:21px;height:21px;padding:0 6px;border-radius:20px;background:#e54859;color:white;font-size:11px;font-weight:700}
+body[data-role] .consultation-thread-pane{display:flex;min-width:0;flex-direction:column}
+body[data-role] .consultation-selected{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid #e8edf4;background:#fff}
+body[data-role] .consultation-selected h3{margin:0;color:#263d5d;font-size:17px}
+body[data-role] .consultation-selected p{margin:4px 0 0;color:#7a899e;font-size:12px}
+body[data-role] .consultation-selected-identity{display:grid;gap:3px;min-width:0}
+body[data-role] .consultation-selected-identity small{color:#71819a;font-size:11px}
+body[data-role] .consultation-thread-count{flex:0 0 auto;color:#71819a;font-size:11px}
+body[data-role] .consultations-thread{display:grid;align-content:start;gap:11px;max-height:610px;overflow:auto;padding:15px;background:#f7f9fc}
+body[data-role] .consultations-thread .consultation-card{padding:14px;border-color:#e5ebf3;border-radius:12px;box-shadow:0 2px 8px #20365308}
+body[data-role] .consultations-thread .consultation-card-head{margin-bottom:8px}
+body[data-role] .consultations-thread .consultation-card-head small{color:#7b899d;font-size:11px}
+body[data-role] .consultations-thread .consultation-question{padding:11px 13px;font-size:13px}
+body[data-role] .consultations-thread .consultation-previous-answer{padding:10px 12px}
+body[data-role] .consultations-thread .consultation-reply-form{grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8px;margin-top:10px}
+body[data-role] .consultations-thread .consultation-reply-form textarea{min-height:48px;max-height:130px;resize:vertical;font-size:13px}
+body[data-role] .consultations-thread .consultations-reply-button{min-height:40px;padding:0 13px;white-space:nowrap}
+@media(max-width:760px){body[data-role] .consultations-inbox{grid-template-columns:1fr}body[data-role] .consultations-users{display:flex;gap:6px;max-height:145px;overflow:auto;border-right:0;border-bottom:1px solid #e8edf4}body[data-role] .consultation-user{flex:0 0 230px;width:230px;margin:0}body[data-role] .consultations-thread{max-height:none}body[data-role] .consultation-selected{align-items:flex-start;flex-direction:column}}
+
+/* One continuous consultation chat and one reply composer per customer. */
+body[data-role] .consultation-thread-pane{display:flex;height:640px;min-height:0;flex-direction:column}
+body[data-role] .consultations-thread{display:flex;flex:1;min-height:0;max-height:none;flex-direction:column;gap:8px;overflow:auto;padding:18px;background:#f5f7fb}
+body[data-role] .consultation-message-row{display:flex;width:100%;margin:0}
+body[data-role] .consultation-message-row.customer-message{justify-content:flex-start}
+body[data-role] .consultation-message-row.staff-message{justify-content:flex-end}
+body[data-role] .consultation-question-bubble,body[data-role] .consultation-answer-bubble{width:fit-content;max-width:min(76%,620px);min-height:0;box-sizing:border-box;padding:10px 14px;border-radius:15px;font-size:14px;line-height:1.55;overflow-wrap:anywhere;white-space:pre-wrap;box-shadow:0 1px 2px #2036530a}
+body[data-role] .consultation-question-bubble{border-bottom-left-radius:5px;background:#fff;border:1px solid #e3eaf3;color:#263d5d}
+body[data-role] .consultation-question-bubble{cursor:default}
+body[data-role] .consultation-question-bubble>small,body[data-role] .consultation-answer-bubble>small{display:none}
+body[data-role] .consultation-message-row .show-chat-time [data-chat-time]{display:block;margin-top:6px;color:#8794a6;font-size:10px;text-align:right}
+body[data-role] .consultation-answer-bubble{border:1px solid #e3eaf3;border-bottom-right-radius:5px;background:#fff;color:#263d5d}
+body[data-role] .consultation-answer-bubble p{margin:0}
+body[data-role] .consultation-question-bubble>small,body[data-role] .consultation-answer-bubble>small{display:block;margin-top:6px;color:#8794a6;font-size:10px;text-align:right}
+body[data-role] .consultation-answer-bubble>small{color:#8794a6}
+body[data-role] .consultation-thread-compose{position:sticky;bottom:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 10px;padding:13px 16px;border-top:1px solid #e5ebf3;background:#fff}
+body[data-role] .consultation-thread-compose[hidden]{display:none!important}
+body[data-role] .consultation-thread-compose textarea{min-height:50px;max-height:150px;padding:11px 12px;resize:vertical;border:1px solid #dbe5f1;border-radius:11px;color:#283e5d;font:14px 'Be Vietnam Pro',Arial,sans-serif}
+body[data-role] .consultation-thread-compose .consultations-reply-button{align-self:end;min-height:42px}
+body[data-role] .consultation-thread-compose>small{grid-column:1/-1;color:#8290a4;font-size:11px}
+body[data-role] .consultation-reply-target{grid-column:1/-1;display:grid;gap:5px;color:#71819a;font-size:12px}
+body[data-role] .consultation-reply-target[hidden]{display:none!important}
+body[data-role] .consultation-reply-target select{min-height:36px;padding:0 10px;border:1px solid #dbe5f1;border-radius:9px;background:#fff;color:#283e5d;font:13px 'Be Vietnam Pro',Arial,sans-serif}
+@media(max-width:760px){body[data-role] .consultation-thread-pane{height:68vh;min-height:440px}body[data-role] .consultations-thread{max-height:none;padding:13px}body[data-role] .consultation-question-bubble,body[data-role] .consultation-answer-bubble{max-width:88%}body[data-role] .consultation-thread-compose{grid-template-columns:1fr;padding:11px}body[data-role] .consultation-thread-compose .consultations-reply-button{justify-self:end}}
+
+/* Keep the workspace still while the selected consultation's messages scroll. */
+body[data-role].consultation-tab-active{height:100vh;overflow:hidden}
+body[data-role].consultation-tab-active .workspace{height:100vh;min-height:0;overflow:hidden}
+body[data-role].consultation-tab-active main{display:flex;width:100%;max-width:none;height:100vh;min-height:0;box-sizing:border-box;flex-direction:column;overflow:hidden;margin:0;padding:88px 42px 8px}
+body[data-role].consultation-tab-active .consultation-workspace{display:flex;flex:1;min-height:0;flex-direction:column;overflow:hidden;margin:0;padding:0 0 8px}
+body[data-role].consultation-tab-active .consultation-heading,body[data-role].consultation-tab-active .consultations-status{display:none!important}
+body[data-role].consultation-tab-active .consultations-inbox{display:grid;flex:1;height:100%;min-height:0;grid-template-columns:minmax(230px,280px) minmax(0,1fr);overflow:hidden}
+body[data-role].consultation-tab-active .consultations-users{height:100%;max-height:none;overflow:hidden}
+body[data-role].consultation-tab-active .consultation-thread-pane{height:auto;min-height:0;flex:1;overflow:hidden}
+body[data-role].consultation-tab-active .consultations-thread{height:auto;min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain}
+body[data-role].consultation-tab-active .consultation-thread-compose{position:static;flex:0 0 auto}
+body[data-role].consultation-tab-active .workspace-footer{display:none}
+body[data-role] .consultation-question-bubble>small,body[data-role] .consultation-answer-bubble>small{display:none!important}
+body[data-role] .consultation-message-row .show-chat-time [data-chat-time]{display:block!important}
+@media(max-width:1000px){body[data-role].consultation-tab-active main{padding-right:24px;padding-left:24px}}
+@media(max-width:720px){body[data-role].consultation-tab-active main{height:calc(100vh - 64px);padding:0 12px 8px}body[data-role].consultation-tab-active .consultation-workspace{padding:0}body[data-role].consultation-tab-active .consultations-inbox{grid-template-columns:minmax(100px,30%) minmax(0,1fr)}body[data-role].consultation-tab-active .consultations-users{padding:4px}body[data-role].consultation-tab-active .consultation-thread-compose{grid-template-columns:minmax(0,1fr) auto;padding:10px}body[data-role].consultation-tab-active .consultation-thread-compose>small{display:none}}
+
+/* Remove repeated page title/description blocks; keep the actual tools and data. */
+body[data-role] #medicine-manager .medicine-head>div,
+body[data-role] #warehouse-manager .warehouse-heading>div,
+body[data-role] #admin-orders .manage-orders-heading>div,
+body[data-role] #admin-customers .customers-heading>div,
+body[data-role] .report-page-heading,
+body[data-role] #staff-access>.medicine-head,
+body[data-role] #document-upload .upload-heading,
+body[data-role] #admin-account>.profile-heading{display:none!important}
+
+/* Subtle motion and feedback for the admin/staff sidebar. */
+body[data-role] .sidebar{background:linear-gradient(180deg,#fff 0%,#f9fbff 100%)}
+body[data-role] .workspace-brand>span{animation:sidebar-mark-glow 3.6s ease-in-out infinite;box-shadow:0 5px 14px #1554c026}
+body[data-role] .workspace-nav{gap:7px;margin-top:8px}
+body[data-role] .workspace-nav a{position:relative;isolation:isolate;overflow:hidden;min-height:44px;border:1px solid transparent;transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease,border-color .2s ease}
+body[data-role] .workspace-nav a::before{position:absolute;z-index:-1;top:8px;bottom:8px;left:0;width:3px;border-radius:0 5px 5px 0;background:#2468e8;content:"";transform:scaleY(0);transition:transform .2s ease}
+body[data-role] .workspace-nav a:hover{transform:translateX(4px);border-color:#e3ecfc;background:#f2f6ff;color:#174fae;box-shadow:0 5px 14px #1c4d8d0d}
+body[data-role] .workspace-nav a.active{border-color:#dce8ff;background:linear-gradient(100deg,#e8f0ff,#f4f7ff);color:#1554c0;box-shadow:0 5px 16px #1c4d8d12}
+body[data-role] .workspace-nav a.active::before{transform:scaleY(1)}
+body[data-role] .workspace-nav a span{transition:transform .2s ease,font-weight .2s ease}
+body[data-role] .workspace-nav a:hover span{transform:translateX(2px)}
+body[data-role] .workspace-nav a.active span{font-weight:700}
+body[data-role] .sidebar-user{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+body[data-role] .sidebar-user:hover{transform:translateY(-2px);border-color:#dce8ff;box-shadow:0 8px 20px #1c4d8d12}
+body[data-role] .sidebar-bottom a{transition:color .18s ease,transform .18s ease}
+body[data-role] .sidebar-bottom a:hover{transform:translateX(3px);color:#1554c0}
+body[data-role] .workspace-nav [data-order-notice-count]:not([hidden]),body[data-role] .workspace-nav [data-consult-notice-count]:not([hidden]){animation:sidebar-badge-pop .35s ease-out}
+@keyframes sidebar-mark-glow{0%,100%{box-shadow:0 5px 14px #1554c020}50%{box-shadow:0 7px 20px #1554c04a}}
+@keyframes sidebar-badge-pop{0%{transform:scale(.72)}65%{transform:scale(1.16)}100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){body[data-role] .workspace-brand>span,body[data-role] .workspace-nav [data-order-notice-count]:not([hidden]),body[data-role] .workspace-nav [data-consult-notice-count]:not([hidden]){animation:none}body[data-role] .workspace-nav a,body[data-role] .workspace-nav a span,body[data-role] .sidebar-user,body[data-role] .sidebar-bottom a,body[data-role] .workspace-nav a::before{transition:none}}
+
+/* Long Chau blue sidebar theme. */
+body[data-role] .sidebar{border-right:1px solid #0b3e98;background:linear-gradient(180deg,#1765df 0%,#1045a4 100%);color:#fff}
+body[data-role] .workspace-brand{color:#fff}
+body[data-role] .workspace-brand>span{background:#fff;color:#1554c0;box-shadow:0 6px 18px #082e7840}
+body[data-role] .workspace-brand strong{color:#fff}
+body[data-role] .sidebar-user{border-color:#ffffff24;background:#ffffff12;color:#fff}
+body[data-role] .sidebar-user>span{background:#ffffff;color:#1554c0}
+body[data-role] .sidebar-user b,body[data-role] .sidebar-user small{color:#fff}
+body[data-role] .workspace-nav a{color:#e7efff}
+body[data-role] .workspace-nav a:hover{border-color:#ffffff20;background:#ffffff18;color:#fff;box-shadow:0 5px 14px #052b6c20}
+body[data-role] .workspace-nav a.active{border-color:#fff;background:#fff;color:#1554c0;box-shadow:0 7px 18px #062b7133}
+body[data-role] .workspace-nav a::before{background:#ffd45a}
+body[data-role] .sidebar-bottom{border-top-color:#ffffff35;color:#e4edff}
+body[data-role] .sidebar-bottom a{color:#fff}
+body[data-role] .sidebar-bottom a:hover{color:#ffe18a}
+body[data-role] .role-dot{background:#70e0b4}

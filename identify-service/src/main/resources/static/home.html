@@ -10,9 +10,9 @@
       href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/style.css?v=24" />
+    <link rel="stylesheet" href="assets/css/style.css?v=27" />
     <link rel="stylesheet" href="assets/css/refresh.css?v=43" />
-    <link rel="stylesheet" href="assets/css/storefront.css?v=13" />
+    <link rel="stylesheet" href="assets/css/storefront.css?v=14" />
   <link rel="stylesheet" href="css/upload.css?v=6"></head>
   <body class="storefront-page">
     <header class="site-header">
@@ -249,15 +249,13 @@
             placeholder="Nhập triệu chứng hoặc câu hỏi cần tư vấn..."
           ></textarea>
           <div class="consult-compose-tools">
-            <label class="consult-image-button"
-              ><input id="consultImageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" />Gửi ảnh</label
-            >
-            <button type="button" class="consult-image-clear" id="consultImageClear" hidden>Xóa ảnh</button>
+            <label class="consult-image-button" for="consultAttachmentInput">Đính kèm tệp</label>
+            <input id="consultAttachmentInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif,application/pdf,.doc,.docx,.xls,.xlsx" hidden />
+            <span class="consult-attachment-name" id="consultAttachmentName" hidden></span>
+            <button type="button" class="consult-image-clear" id="consultAttachmentClear" hidden>Xóa</button>
           </div>
-          <div class="consult-image-preview" id="consultImagePreview" hidden>
-            <img alt="Ảnh khách hàng chọn để gửi tư vấn" />
-          </div>
-          <button type="submit">Gửi</button>
+          <p class="consult-file-hint">Ảnh, PDF, Word hoặc Excel · Tối đa 10 MB</p>
+          <button type="submit">Gửi câu hỏi</button>
         </form>
       </section>
       <button class="consult" id="consultToggle" type="button">
@@ -290,7 +288,7 @@
     
     
 
-  <script src="js/common.js?v=2"></script><script src="js/storefront.js?v=13"></script></body>
+  <script src="js/common.js?v=3"></script><script src="js/storefront.js?v=20"></script></body>
 </html>
 
 

@@ -52,6 +52,7 @@
   document.body.append(detailDialog);
   detailDialog.querySelector("button").onclick = () => detailDialog.close();
   const money = value => new Intl.NumberFormat("vi-VN").format(Number(value) || 0) + "";
+  const normalizeText = value => String(value || '').toLocaleLowerCase('vi').replace(/đ/g, 'd').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\b(va|and)\b/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim();
   const readCart = () => { try { return JSON.parse(localStorage.getItem(cartKey) || "[]"); } catch { return []; } };
   function updateCartCount() {
     const count = document.getElementById("cartCount");
@@ -70,8 +71,9 @@
     detailDialog.showModal();
   }
   function renderCatalog() {
-    const query = search.value.trim().toLocaleLowerCase("vi");
-    const rows = catalog.filter(m => (!activeCategory || (m.category || "").toLocaleLowerCase("vi").includes(activeCategory.toLocaleLowerCase("vi"))) && (!query || [m.name,m.ingredient,m.category].join(" ").toLocaleLowerCase("vi").includes(query)));
+    const query = normalizeText(search.value);
+    const category = normalizeText(activeCategory);
+    const rows = catalog.filter(m => (!category || normalizeText(m.category).includes(category)) && (!query || normalizeText([m.name,m.ingredient,m.category].join(" ")).includes(query)));
     grid.replaceChildren();
     if (!rows.length) {grid.textContent = catalog.length ? "Không tìm thấy thuốc phù hợp." : "Chưa có thuốc trong danh mục.";return;}
     rows.forEach(m => {
@@ -91,14 +93,15 @@
     });
   }
   async function loadCatalog() {
-    try { catalog=await window.Identify.request("/catalog/medicines"); renderCatalog(); }
+    try { catalog=await window.Identify.request("/catalog/medicines", {cache:'no-store'}); renderCatalog(); }
     catch { grid.textContent="Chưa tải được danh sách thuốc. Vui lòng thử tải lại trang."; }
   }
   search.addEventListener("input",renderCatalog);
-  document.getElementById("searchButton").addEventListener("click",()=>{renderCatalog();document.getElementById("products").scrollIntoView({behavior:"smooth"});});
-  search.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();renderCatalog();document.getElementById("products").scrollIntoView({behavior:"smooth"});}});
-  document.querySelectorAll("[data-category]").forEach(el=>el.addEventListener("click",()=>{activeCategory=el.dataset.category||"";renderCatalog();document.getElementById("products").scrollIntoView({behavior:"smooth"});}));
-  document.querySelectorAll("[data-search]").forEach(el=>el.addEventListener("click",()=>{search.value=el.dataset.search;renderCatalog();}));
+  const showProducts = () => document.getElementById("products").scrollIntoView({behavior:"smooth"});
+  document.getElementById("searchButton").addEventListener("click",()=>{activeCategory="";renderCatalog();showProducts();});
+  search.addEventListener("keydown",event=>{if(event.key==="Enter"){event.preventDefault();activeCategory="";renderCatalog();showProducts();}});
+  document.querySelectorAll("[data-category]").forEach(el=>el.addEventListener("click",()=>{activeCategory=el.dataset.category||"";search.value="";renderCatalog();showProducts();}));
+  document.querySelectorAll("[data-search]").forEach(el=>el.addEventListener("click",()=>{activeCategory="";search.value=el.dataset.search;renderCatalog();showProducts();}));
   document.querySelector('[data-nav="orders"]')?.addEventListener('click', () => { window.location.href = 'orders.html'; });
   document.querySelector('[data-nav="personal"]')?.addEventListener('click', async () => {
     const dialog = document.getElementById('personalInfoDialog');
@@ -125,8 +128,103 @@
   });
   updateCartCount();
   loadCatalog();  document.getElementById('cartButton').onclick = () => { if (!userCanShop) { goLogin(); return; } window.location.href = 'cart.html'; };
-  const panel = document.getElementById('consultPanel');
-  document.getElementById('consultToggle').addEventListener('click', () => {panel.hidden = !panel.hidden;});
-  document.getElementById('consultClose').addEventListener('click', () => {panel.hidden = true;});
-  document.getElementById('consultForm').addEventListener('submit', event => {event.preventDefault(); document.getElementById('consultMessages').textContent = 'Vui lòng gọi 1800 6928 để được tư vấn.';});
+const panel = document.getElementById('consultPanel');
+  const chatMessages = document.getElementById('consultMessages');
+  const chatForm = document.getElementById('consultForm');
+  const chatInput = document.getElementById('consultQuestion');
+  const fileInput = document.getElementById('consultAttachmentInput');
+  const fileName = document.getElementById('consultAttachmentName');
+  const fileClear = document.getElementById('consultAttachmentClear');
+  let selectedAttachment = null;
+  let chatSignature = '';
+  let chatBusy = false;
+  const chatObjectUrls = new Set();
+  function clearAttachment() { selectedAttachment = null; if (fileInput) fileInput.value = ''; if (fileName) { fileName.hidden = true; fileName.textContent = ''; } if (fileClear) fileClear.hidden = true; }
+  function chatLine(kind, text, time) {
+    const article = document.createElement('article'); article.className = `consult-message ${kind}`;
+    const bubble = document.createElement('div'); bubble.className = 'consult-bubble';
+    if (text) { const p = document.createElement('p'); p.textContent = text; bubble.append(p); }
+    if (time) {
+      const small = document.createElement('small');
+      small.className = 'consult-chat-time';
+      small.dataset.chatTime = '';
+      small.textContent = new Date(time).toLocaleString('vi-VN');
+      bubble.append(small);
+      let timer;
+      bubble.addEventListener('click', () => {
+        bubble.classList.add('show-chat-time');
+        window.clearTimeout(timer);
+        timer = window.setTimeout(() => bubble.classList.remove('show-chat-time'), 3000);
+      });
+    }
+    article.append(bubble); return { article, bubble };
+  }
+  async function showAttachment(item, bubble) {
+    if (!item.attachmentUrl) return;
+    const response = await fetch(`${window.Identify.API_BASE}${item.attachmentUrl}`, { headers: { Authorization: `Bearer ${token}` } });
+    if (!response.ok) return;
+    const blob = await response.blob(); const url = URL.createObjectURL(blob); chatObjectUrls.add(url);
+    if ((item.attachmentContentType || '').startsWith('image/')) { const img = document.createElement('img'); img.className = 'consult-attachment'; img.alt = item.attachmentName || 'Ảnh đính kèm'; img.src = url; bubble.append(img); }
+    else { const link = document.createElement('a'); link.className = 'consult-file-download'; link.href = url; link.target = '_blank'; link.rel = 'noopener'; link.textContent = `📎 ${item.attachmentName || 'Mở tệp đính kèm'}`; bubble.append(link); }
+  }
+  async function loadConsultations() {
+    if (!userCanShop || !token || panel.hidden || chatBusy) return;
+    chatBusy = true;
+    try {
+      const rows = await request('/consultations/mine', { headers: { Authorization: `Bearer ${token}` } });
+      const next = JSON.stringify(rows);
+      if (next === chatSignature) return;
+      chatSignature = next; chatObjectUrls.forEach(URL.revokeObjectURL); chatObjectUrls.clear(); chatMessages.replaceChildren();
+      if (!rows.length) { const empty = document.createElement('p'); empty.className = 'consult-empty'; empty.textContent = 'Bạn chưa gửi câu hỏi nào. Hãy nhắn cho dược sĩ khi cần hỗ trợ.'; chatMessages.append(empty); return; }
+      for (const item of [...rows].reverse()) {
+        const question = chatLine('is-customer', item.question, item.createdAt); chatMessages.append(question.article);
+        if (item.attachmentUrl) await showAttachment(item, question.bubble);
+        if (item.answer) {
+          item.answer.split('\n\n[[LC_CHAT_REPLY]]\n\n').forEach(rawMessage => {
+            const match = rawMessage.match(/^\[\[LC_AT:([^\]]+)\]\]\n([\s\S]*)$/);
+            const answer = chatLine('is-staff', match ? match[2] : rawMessage, match?.[1]);
+            chatMessages.append(answer.article);
+          });
+        }
+      }
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    } catch (error) { if (!chatMessages.childElementCount) { const p = document.createElement('p'); p.className = 'consult-empty'; p.textContent = `Chưa tải được tin nhắn: ${error.message}`; chatMessages.append(p); } }
+    finally { chatBusy = false; }
+  }
+  fileInput?.addEventListener('change', () => {
+    selectedAttachment = fileInput.files?.[0] || null;
+    if (selectedAttachment && selectedAttachment.size > 10 * 1024 * 1024) { alert('Tệp đính kèm tối đa 10 MB.'); clearAttachment(); return; }
+    if (fileName) { fileName.textContent = selectedAttachment?.name || ''; fileName.hidden = !selectedAttachment; }
+    if (fileClear) fileClear.hidden = !selectedAttachment;
+  });
+  fileClear?.addEventListener('click', clearAttachment);
+  document.getElementById('consultToggle').addEventListener('click', () => {
+    panel.hidden = !panel.hidden;
+    if (!panel.hidden) {
+      if (!token || !userCanShop) { chatMessages.textContent = 'Vui lòng đăng nhập bằng tài khoản người mua để chat với dược sĩ.'; return; }
+      loadConsultations();
+    }
+  });
+  document.getElementById('consultClose').addEventListener('click', () => { panel.hidden = true; });
+  chatInput.addEventListener('keydown', event => {
+    if (event.key !== 'Enter' || event.shiftKey || event.isComposing || event.keyCode === 229) return;
+    event.preventDefault();
+    if (!chatForm.querySelector('button[type="submit"]').disabled) chatForm.requestSubmit();
+  });
+  chatForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!token || !userCanShop) { goLogin(); return; }
+    const question = chatInput.value.trim();
+    if (!question && !selectedAttachment) { chatInput.focus(); return; }
+    const data = new FormData(); if (question) data.append('question', question); if (selectedAttachment) data.append('attachment', selectedAttachment);
+    const button = chatForm.querySelector('button[type="submit"]'); button.disabled = true; button.textContent = 'Đang gửi…';
+    try {
+      const response = await fetch(`${window.Identify.API_BASE}/consultations`, { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: data });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.message || 'Không gửi được câu hỏi.');
+      chatInput.value = ''; clearAttachment(); chatSignature = ''; await loadConsultations();
+    } catch (error) { alert(`Không gửi được câu hỏi: ${error.message}`); }
+    finally { button.disabled = false; button.textContent = 'Gửi câu hỏi'; }
+  });
+  window.setInterval(() => { if (!document.hidden && !panel.hidden) loadConsultations(); }, 6000);
 })();
