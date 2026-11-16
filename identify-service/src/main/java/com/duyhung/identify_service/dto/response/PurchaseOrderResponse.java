@@ -23,6 +23,12 @@ public record PurchaseOrderResponse(
         String note,
         long total,
         LocalDateTime createdAt,
+        long subtotal,
+        String voucherCode,
+        long discount,
+        LocalDateTime paidAt,
+        String paymentConfirmedBy,
+        LocalDateTime paymentExpiresAt,
         List<Item> items
 ) {
     public record Item(String medicineId, String medicineName, long unitPrice, int quantity) { }

@@ -1,0 +1,34 @@
+/* Voucher styles stay within the admin module. */
+#voucher-manager[hidden]{display:none!important}
+#voucher-manager .medicine-head{display:flex;align-items:center;justify-content:space-between;gap:20px}
+#voucher-manager .voucher-tools{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:16px;padding:18px 0;border-top:1px solid #edf1f7}
+#voucher-manager label{display:grid;gap:8px;font-size:12px;font-weight:600;color:#536580}
+#voucher-manager input,#voucher-manager select{min-width:0;width:100%;height:42px;padding:10px 12px;border:1px solid #dce5ef;border-radius:9px;background:#fff;color:#20324f;font:inherit}
+#voucher-manager input:focus,#voucher-manager select:focus{outline:2px solid #dce8ff;border-color:#618fee}
+#voucher-manager #notice{min-height:20px;color:#718099;font-size:12px}
+#voucher-manager #voucher-list{display:grid;gap:12px}
+#voucher-manager .voucher{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:20px;border:1px solid #e2e9f2;border-radius:13px;background:#fff}
+#voucher-manager .voucher h2{margin:0 0 10px;color:#20324f;font-size:15px;line-height:1.6}
+#voucher-manager .voucher p{margin:8px 0 0;font-size:12px;color:#64758c;line-height:1.7}
+#voucher-manager .voucher-status{display:inline-block;border-radius:7px;padding:5px 9px;background:#f0f3f7;color:#718099;font-size:11px;font-weight:600}
+#voucher-manager .voucher-status.available{background:#e9f8f0;color:#21865e}
+#voucher-manager .voucher-status.upcoming{background:#eaf1ff;color:#245bc0}
+#voucher-manager .voucher-status.expired,#voucher-manager .voucher-status.exhausted{background:#fff4e5;color:#a9671c}
+#voucher-manager .actions{display:flex;gap:8px;flex-shrink:0}
+#voucher-manager .actions button,#voucher-manager dialog button{padding:10px 14px;border:0;border-radius:9px;background:#1555d9;color:#fff;font:600 12px 'Be Vietnam Pro',Arial,sans-serif;cursor:pointer}
+#voucher-manager .actions .voucher-secondary,#voucher-manager #cancel{background:#eef3fa;color:#426183}
+#voucher-manager button:disabled{opacity:.5;cursor:wait}
+#voucher-manager .voucher-empty{padding:35px 20px;text-align:center;color:#718099;border:1px dashed #dce5ef;border-radius:12px;line-height:1.7}
+#voucher-manager dialog{width:min(650px,calc(100vw - 32px));max-height:90dvh;padding:26px;border:0;border-radius:16px;color:#20324f;box-shadow:0 24px 80px #13366a35}
+#voucher-manager dialog::backdrop{background:#13274880;backdrop-filter:blur(3px)}
+#voucher-manager dialog h2{margin:0 0 20px;font-size:21px}
+#voucher-manager dialog label{margin:12px 0}
+#voucher-manager .fields{display:grid;grid-template-columns:1fr 1fr;column-gap:18px}
+#voucher-manager .check{display:flex;align-items:center;gap:9px}
+#voucher-manager .check input{width:17px;height:17px;accent-color:#1555d9}
+#voucher-manager dialog p{font-size:12px;color:#718099;line-height:1.6}
+#voucher-manager #form-notice{color:#bc3548}
+#voucher-manager dialog footer{display:flex;justify-content:flex-end;gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid #edf1f7}
+@media(max-width:700px){#voucher-manager .medicine-head{align-items:flex-start;flex-direction:column}#voucher-manager .voucher-tools{grid-template-columns:1fr}#voucher-manager .voucher{align-items:flex-start;flex-direction:column}#voucher-manager .actions{width:100%}#voucher-manager .actions button{flex:1}#voucher-manager .fields{grid-template-columns:1fr}#voucher-manager dialog{padding:20px}}
+
+#voucher-manager .voucher-heading-actions{display:flex;gap:8px;align-items:center}#voucher-manager .voucher-refresh{padding:10px 14px;border:1px solid #dce5ef;border-radius:9px;background:#fff;color:#426183;font:600 12px 'Be Vietnam Pro',Arial,sans-serif;cursor:pointer}

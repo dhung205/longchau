@@ -14,7 +14,7 @@
   const dialog = document.getElementById('order-detail-dialog');
   const qrDialog = document.getElementById('orders-qr-dialog');
   const money = value => `${new Intl.NumberFormat('vi-VN').format(Number(value) || 0)}`;
-  const statusText = status => ({ PENDING: 'Chờ xác nhận', CONFIRMED: 'Đã xác nhận', SHIPPING: 'Đang giao', DELIVERED: 'Giao hàng thành công', CANCELLED: 'Đã hủy' }[status] || status);
+  const statusText = status => ({ READY_FOR_PICKUP: 'Sẵn sàng nhận', PICKED_UP: 'Đã nhận hàng', PENDING: 'Chờ xác nhận', CONFIRMED: 'Đã xác nhận', SHIPPING: 'Đang giao', DELIVERED: 'Giao hàng thành công', CANCELLED: 'Đã hủy' }[status] || status);
   const payText = status => ({ UNPAID: 'Thanh toán khi nhận', PENDING: 'Chờ thanh toán QR', PAID: 'Đã thanh toán' }[status] || status);
   let pendingPaymentOrder = null;
 
@@ -62,7 +62,8 @@
       const destination = order.shippingMethod === 'DELIVERY' ? [order.address, order.district, order.province].filter(Boolean).join(', ') : `Nhận tại: ${order.pickupStore || 'Nhà thuốc'}`;
       recipient.textContent = `${order.recipientName} · ${order.phone} · ${destination}`;
       const total = document.createElement('strong'); total.className = 'order-detail-total'; total.textContent = `Tổng thanh toán: ${money(order.total)}`;
-      content.append(title, status, date, items, recipient, total);
+      const breakdown = document.createElement('p'); breakdown.textContent = 'Tạm tính: ' + money(order.subtotal) + ' · Voucher: ' + (order.voucherCode || 'Không có') + ' · Giảm: ' + money(order.discount);
+      content.append(title, status, date, items, recipient, breakdown, total);
       if (order.status === 'PENDING') {
         const actions = document.createElement('div'); actions.className = 'order-detail-actions';
         if (order.paymentMethod === 'QR' && order.paymentStatus === 'PENDING') { const pay = document.createElement('button'); pay.className = 'orders-primary'; pay.textContent = 'Thanh toán QR'; pay.onclick = () => { dialog.close(); showQr(order); }; actions.append(pay); }
@@ -80,17 +81,10 @@
 
   function showQr(order) {
     pendingPaymentOrder = order.id;
-    document.getElementById('orders-qr-info').textContent = `Mã đơn ${order.id} · Tổng tiền ${money(order.total)}`;
+    document.getElementById('orders-qr-info').textContent = `Mã đơn ${order.id} · Tổng tiền ${money(order.total)} · Hạn xác nhận: ${order.paymentExpiresAt ? new Date(order.paymentExpiresAt).toLocaleString('vi-VN') : '15 phút'}`;
     qrDialog.showModal();
   }
-  async function confirmPayment() {
-    if (!pendingPaymentOrder) return;
-    const button = document.getElementById('orders-confirm-payment'); button.disabled = true;
-    try { await api.request(`/orders/${encodeURIComponent(pendingPaymentOrder)}/confirm-qr-payment`, { method: 'POST', headers }); qrDialog.close(); pendingPaymentOrder = null; message.textContent = 'Đã cập nhật thanh toán thử nghiệm.'; await loadOrders(); }
-    catch (error) { document.getElementById('orders-qr-info').textContent = `Không xác nhận được: ${error.message}`; }
-    finally { button.disabled = false; }
-  }
-
+  function confirmPayment() { qrDialog.close(); message.textContent = 'Vui lòng chờ nhân viên kiểm tra và xác nhận thanh toán.'; }
   document.getElementById('order-detail-close').addEventListener('click', () => dialog.close());
   document.getElementById('orders-confirm-payment').addEventListener('click', confirmPayment);
   document.querySelectorAll('[data-close-qr]').forEach(button => button.addEventListener('click', () => { qrDialog.close(); pendingPaymentOrder = null; }));

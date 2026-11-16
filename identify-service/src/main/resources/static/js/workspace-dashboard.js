@@ -69,7 +69,7 @@
       buckets = Array.from({ length: daysInMonth }, (_, day) => ({ label: String(day + 1), total: 0, key: day + 1 }));
       matches = date => value && date.getFullYear() === year && date.getMonth() === month - 1;
     }
-    const orders = allOrders.filter(order => order.status === 'DELIVERED' && matches(new Date(order.createdAt)));
+    const orders = allOrders.filter(order => ['DELIVERED', 'PICKED_UP'].includes(order.status) && matches(new Date(order.createdAt)));
     orders.forEach(order => {
       const date = new Date(order.createdAt);
       const key = mode === 'day' ? date.getHours() : mode === 'year' ? date.getMonth() : date.getDate();
@@ -149,7 +149,7 @@
     try { allOrders = await window.Identify.request('/orders/manage', { headers: { Authorization: `Bearer ${window.Identify.getToken()}` } }); }
     catch { allOrders = []; }
     if (exportButton) exportButton.disabled = false;
-    show('dash-orders', String(allOrders.filter(order => order.status === 'DELIVERED').length));
+    show('dash-orders', String(allOrders.filter(order => ['DELIVERED', 'PICKED_UP'].includes(order.status)).length));
     renderRevenueReport();
   }
   periodSelect?.addEventListener('change', () => { periodValue.value = ''; updatePeriodInput(); renderRevenueReport(); });

@@ -23,11 +23,18 @@
   const filter = document.getElementById('order-status-filter');
   const refreshButton = document.getElementById('orders-refresh');
   const money = amount => `${new Intl.NumberFormat('vi-VN').format(Number(amount) || 0)}`;
-  const statusNames = { PENDING: 'Chờ xác nhận', CONFIRMED: 'Đã xác nhận', SHIPPING: 'Đang giao', DELIVERED: 'Giao hàng thành công', CANCELLED: 'Đã hủy' };
-  const nextStatus = { PENDING: ['CONFIRMED', 'Xác nhận đơn hàng'], CONFIRMED: ['SHIPPING', 'Bắt đầu giao hàng'], SHIPPING: ['DELIVERED', 'Xác nhận giao thành công'] };
+  const statusNames = { READY_FOR_PICKUP: 'Sẵn sàng nhận', PICKED_UP: 'Đã nhận hàng', PENDING: 'Chờ xác nhận', CONFIRMED: 'Đã xác nhận', SHIPPING: 'Đang giao', DELIVERED: 'Giao hàng thành công', CANCELLED: 'Đã hủy' };
+  const nextStatus = { READY_FOR_PICKUP: ['PICKED_UP', 'Xác nhận đã nhận hàng và thu tiền'], PENDING: ['CONFIRMED', 'Xác nhận đơn hàng'], CONFIRMED: ['SHIPPING', 'Bắt đầu giao hàng'], SHIPPING: ['DELIVERED', 'Xác nhận giao hàng và đã thu tiền'] };
   let orders = [];
   let lastPendingCount = null;
   let refreshBusy = false;
+  let dataRevision = 0;
+  const updating = new Set();
+  function applyUpdatedOrder(updated) {
+    dataRevision++;
+    orders = orders.map(order => order.id === updated.id ? updated : order);
+    refreshStats(); render();
+  }
 
   function refreshStats() {
     for (const status of ['PENDING', 'CONFIRMED', 'SHIPPING', 'DELIVERED'])
@@ -79,11 +86,21 @@
     const total = document.createElement('strong'); total.className = 'manage-order-total'; total.textContent = money(order.total);
     const actions = document.createElement('div'); actions.className = 'manage-order-actions';
     const view = document.createElement('button'); view.type = 'button'; view.textContent = 'Xem chi tiết'; view.addEventListener('click', () => showDetail(order.id)); actions.append(view);
+    if (order.paymentMethod === 'QR' && order.paymentStatus === 'PENDING' && order.status === 'PENDING') {
+      const paid = document.createElement('button'); paid.type = 'button'; paid.textContent = 'Xác nhận đã nhận tiền QR';
+      paid.onclick = async () => {
+        if (!confirm('Đã kiểm tra tài khoản và nhận đủ ' + money(order.total) + '?')) return;
+        paid.disabled = true;
+        try { await api.request('/orders/manage/' + encodeURIComponent(order.id) + '/confirm-qr-payment', { method: 'POST', headers }); await load({}); }
+        catch (error) { message.textContent = error.message; paid.disabled = false; }
+      }; actions.append(paid);
+    }
     if (nextStatus[order.status]) {
-      const [target, label] = nextStatus[order.status];
+      const [target, label] = order.status === 'CONFIRMED' && order.shippingMethod === 'PICKUP' ? ['READY_FOR_PICKUP', 'Sẵn sàng nhận tại nhà thuốc'] : nextStatus[order.status];
       const advance = document.createElement('button'); advance.type = 'button'; advance.className = 'orders-primary'; advance.textContent = label;
       const blockedByPayment = order.paymentMethod === 'QR' && order.paymentStatus !== 'PAID' && order.status === 'PENDING';
-      advance.disabled = blockedByPayment;
+      advance.disabled = blockedByPayment || updating.has(order.id);
+      if (updating.has(order.id)) advance.textContent = 'Đang cập nhật…';
       if (blockedByPayment) advance.title = 'Khách cần thanh toán QR trước khi xác nhận.';
       advance.addEventListener('click', () => changeStatus(order, target)); actions.append(advance);
     }
@@ -92,6 +109,7 @@
 
   async function load({ silent = false, manual = false } = {}) {
     if (refreshBusy) return;
+    const revision = dataRevision;
     refreshBusy = true;
     if (!silent) message.textContent = 'Đang tải đơn hàng…';
     if (manual && refreshButton) {
@@ -100,7 +118,9 @@
       refreshButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4.5h-4.5"/></svg><span>Đang tải…</span>';
     }
     try {
-      orders = await api.request('/orders/manage', { headers });
+      const loaded = await api.request('/orders/manage', { headers });
+      if (revision !== dataRevision) return;
+      orders = loaded;
       message.textContent = '';
       refreshStats(); render();
       if (manual && !message.textContent) message.textContent = `Đã cập nhật lúc ${new Date().toLocaleTimeString('vi-VN', {hour:'2-digit',minute:'2-digit'})}.`;
@@ -116,14 +136,18 @@
   }
 
   async function changeStatus(order, status) {
-    const confirmText = status === 'CONFIRMED' ? `Xác nhận đơn #${order.id.slice(0, 8).toUpperCase()}?` : status === 'SHIPPING' ? 'Chuyển đơn sang trạng thái đang giao?' : 'Xác nhận khách đã nhận được hàng?';
+    const confirmText = status === 'CONFIRMED' ? `Xác nhận đơn #${order.id.slice(0, 8).toUpperCase()}?` : status === 'SHIPPING' ? 'Chuyển đơn sang trạng thái đang giao?' : 'Xác nhận khách đã nhận hàng và đã thanh toán đủ tiền (nếu trả tiền mặt)?';
     if (!window.confirm(confirmText)) return;
+    if (updating.has(order.id)) return;
+    updating.add(order.id); render();
     message.textContent = 'Đang cập nhật trạng thái…';
     try {
-      await api.request(`/orders/manage/${encodeURIComponent(order.id)}/status`, { method: 'PATCH', headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify({ status }) });
-      await load();
+      const updated = await api.request(`/orders/manage/${encodeURIComponent(order.id)}/status`, { method: 'PATCH', headers: { ...headers, 'Content-Type': 'application/json' }, body: JSON.stringify({ status }) });
+      updating.delete(order.id);
+      applyUpdatedOrder(updated);
       message.textContent = `Đã cập nhật: ${statusNames[status]}.`;
     } catch (error) { message.textContent = `Không cập nhật được đơn: ${error.message}`; }
+    finally { updating.delete(order.id); render(); }
   }
 
   async function showDetail(id) {
@@ -144,7 +168,8 @@
       const items = document.createElement('div'); items.className = 'order-detail-items';
       (order.items || []).forEach(item => { const row = document.createElement('div'); row.className = 'order-detail-item'; const name = document.createElement('span'); name.textContent = `${item.medicineName} × ${item.quantity}`; const price = document.createElement('b'); price.textContent = money(item.unitPrice * item.quantity); row.append(name, price); items.append(row); });
       const total = document.createElement('strong'); total.className = 'order-detail-total'; total.textContent = `Tổng thanh toán: ${money(order.total)}`;
-      detail.append(title, status, grid, items, total);
+      const breakdown = document.createElement('p'); breakdown.textContent = 'Tạm tính: ' + money(order.subtotal) + ' · Voucher: ' + (order.voucherCode || 'Không có') + ' · Giảm: ' + money(order.discount) + (order.paidAt ? ' · Thu tiền: ' + order.paidAt + ' · Người xác nhận: ' + order.paymentConfirmedBy : '');
+      detail.append(title, status, grid, items, breakdown, total);
       if (order.note) { const note = document.createElement('p'); note.textContent = `Ghi chú: ${order.note}`; detail.append(note); }
       detailDialog.showModal();
     } catch (error) { message.textContent = `Không tải được chi tiết đơn: ${error.message}`; }

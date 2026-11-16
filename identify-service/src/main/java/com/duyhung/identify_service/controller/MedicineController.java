@@ -23,7 +23,7 @@ public class MedicineController {
     @GetMapping
     @PreAuthorize("hasRole('ADMIN') or hasAuthority('MEDICINE_READ') or hasAuthority('MEDICINE_CREATE') or hasAuthority('MEDICINE_UPDATE') or hasAuthority('MEDICINE_DELETE')")
     public List<Medicine> list() {
-        return repo.findAllByOrderByNameAsc();
+        return repo.findAllByOrderByNameAsc().stream().map(MedicineCatalogController::summary).toList();
     }
 
     @GetMapping("/{id}")
@@ -51,7 +51,7 @@ public class MedicineController {
         m.setStock(input.getStock());
         m.setFunctionText(input.getFunctionText());
         m.setRecommendation(input.getRecommendation());
-        m.setImageData(input.getImageData());
+        if (!java.util.Objects.equals(input.getImageData(), "catalog/medicines/" + id + "/image")) m.setImageData(input.getImageData());
         validate(m);
         return repo.save(m);
     }

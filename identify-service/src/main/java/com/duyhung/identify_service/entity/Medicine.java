@@ -1,6 +1,8 @@
 package com.duyhung.identify_service.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -8,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "thuoc")
 public class Medicine {
@@ -42,87 +46,5 @@ public class Medicine {
         if (createdAt == null) createdAt = LocalDateTime.now();
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String x) {
-        id = x;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String x) {
-        name = x;
-    }
-
-    public String getIngredient() {
-        return ingredient;
-    }
-
-    public void setIngredient(String x) {
-        ingredient = x;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String x) {
-        category = x;
-    }
-
-    public LocalDate getExpiryDate() {
-        return expiryDate;
-    }
-
-    public void setExpiryDate(LocalDate x) {
-        expiryDate = x;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long x) {
-        price = x;
-    }
-
-    public String getFunctionText() {
-        return functionText;
-    }
-
-    public void setFunctionText(String x) {
-        functionText = x;
-    }
-
-    public String getRecommendation() {
-        return recommendation;
-    }
-
-    public void setRecommendation(String x) {
-        recommendation = x;
-    }
-
-    public String getImageData() {
-        return imageData;
-    }
-
-    public void setImageData(String x) {
-        imageData = x;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
 }

@@ -83,6 +83,7 @@ CREATE TABLE IF NOT EXISTS don_hang (
   quan_huyen VARCHAR(100),
   nha_thuoc_nhan VARCHAR(250),
   thoi_diem_thanh_toan DATETIME,
+  nguoi_xac_nhan_thanh_toan VARCHAR(255),
   dia_chi_giao_hang VARCHAR(500),
   ghi_chu VARCHAR(500),
   da_tru_kho TINYINT(1) NOT NULL DEFAULT 1,
@@ -128,7 +129,9 @@ CREATE TABLE khuyen_mai (
  gia_tri_don_toi_thieu DECIMAL(15,2) NOT NULL DEFAULT 0,
  phan_tram_giam DECIMAL(5,2) NOT NULL DEFAULT 0,
  so_tien_giam DECIMAL(15,2) NOT NULL DEFAULT 0,
- dang_ap_dung TINYINT(1) NOT NULL DEFAULT 1
+ dang_ap_dung TINYINT(1) NOT NULL DEFAULT 1,
+ bat_dau_luc DATETIME NULL, ket_thuc_luc DATETIME NULL, gioi_han_luot INT NULL,
+ da_su_dung INT NOT NULL DEFAULT 0, giam_toi_da DECIMAL(15,2) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
@@ -187,11 +190,8 @@ CREATE TABLE ve_dang_nhap_oauth2 (
 
 -- VIEW TƯƠNG THÍCH CHO BACKEND
 CREATE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW `roles` AS SELECT `ma_vai_tro` AS `code`, `ten_vai_tro` AS `name` FROM `vai_tro`;
-
 CREATE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW `accounts` AS SELECT `ma_tai_khoan` AS `id`, `ten_dang_nhap` AS `username`, `mat_khau` AS `password`, `dang_hoat_dong` AS `active`, `ma_vai_tro` AS `role` FROM `tai_khoan`;
-
 CREATE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW `profiles` AS SELECT `ma_tai_khoan` AS `account_id`, `ho_ten` AS `full_name`, `so_dien_thoai` AS `phone`, `thu_dien_tu` AS `email`, `dia_chi` AS `address` FROM `ho_so`;
-
 CREATE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW `customers` AS SELECT `ma_tai_khoan` AS `account_id` FROM `khach_hang`;
 
 CREATE ALGORITHM=MERGE SQL SECURITY INVOKER VIEW `employees` AS SELECT `ma_tai_khoan` AS `account_id`, `chuc_vu` AS `position`, `phong_ban` AS `department`, `ngay_vao_lam` AS `start_date` FROM `nhan_vien`;

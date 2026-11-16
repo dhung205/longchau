@@ -33,8 +33,8 @@ public class PurchaseOrderController {
     @PreAuthorize("hasRole('USER')")
     public PurchaseOrderResponse cancel(@PathVariable String id) { return service.cancel(id); }
 
-    @PostMapping("/{id}/confirm-qr-payment")
-    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/manage/{id}/confirm-qr-payment")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STAFF')")
     public PurchaseOrderResponse confirmQrPayment(@PathVariable String id) { return service.confirmQrPayment(id); }
 
     @GetMapping("/manage")

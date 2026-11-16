@@ -29,6 +29,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(Exception exception) {
+        for (Throwable cause = exception; cause != null; cause = cause.getCause()) {
+            if (cause instanceof org.apache.catalina.connector.ClientAbortException || cause instanceof org.springframework.web.context.request.async.AsyncRequestNotUsableException) {
+                log.debug("Client disconnected while receiving response");
+                return null;
+            }
+        }
         log.error("Unhandled application exception", exception);
         ApiResponse apiResponse = new ApiResponse();
 

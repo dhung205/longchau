@@ -70,6 +70,11 @@ public class PurchaseOrder {
     @Column(name = "ngay_lap", nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "thoi_diem_thanh_toan")
+    private LocalDateTime paidAt;
+    @Column(name = "nguoi_xac_nhan_thanh_toan", length = 255)
+    private String paymentConfirmedBy;
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<PurchaseOrderItem> items = new ArrayList<>();

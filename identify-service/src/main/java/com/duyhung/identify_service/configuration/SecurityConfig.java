@@ -38,9 +38,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/catalog/medicines").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/catalog/medicines", "/catalog/medicines/*/image").permitAll()
                         // The sign-in page and its static assets must be reachable before a user has a JWT.
-                        .requestMatchers("/", "/index.html", "/register.html", "/home.html", "/admin.html", "/staff.html", "/cart.html", "/orders.html", "/manage-orders.html", "/product.html", "/checkout.html", "/account.html", "/error", "/favicon.ico").permitAll()
+                        .requestMatchers("/", "/index.html", "/register.html", "/home.html", "/admin.html", "/vouchers.html", "/staff.html", "/cart.html", "/orders.html", "/manage-orders.html", "/product.html", "/checkout.html", "/account.html", "/error", "/favicon.ico").permitAll()
                         // Serve the bundled login page and its assets without a JWT.
                         .requestMatchers("/assets/**", "/css/**", "/js/**", "/images/**", "/webjars/**").permitAll()
                         .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()

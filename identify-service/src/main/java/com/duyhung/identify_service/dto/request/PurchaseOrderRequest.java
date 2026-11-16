@@ -26,6 +26,8 @@ public class PurchaseOrderRequest {
     private String pickupStore;
     @Size(max = 500)
     private String note;
+    @Size(max = 40)
+    private String voucherCode;
     @NotEmpty @Valid
     private List<Item> items;
 
